@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120">
+  <defs>
+    <linearGradient id="flowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="50%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#a855f7"/>
+    </linearGradient>
+    <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22d3ee"/>
+      <stop offset="100%" style="stop-color:#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="120" fill="none"/>
+
+  <!-- Agent Flow Graph Icon -->
+  <g transform="translate(20, 25)">
+    <!-- Nodes -->
+    <circle cx="15" cy="35" r="12" fill="url(#nodeGradient)" opacity="0.9"/>
+    <circle cx="50" cy="15" r="10" fill="url(#nodeGradient)" opacity="0.8"/>
+    <circle cx="50" cy="55" r="10" fill="url(#nodeGradient)" opacity="0.8"/>
+    <circle cx="85" cy="35" r="12" fill="url(#flowGradient)" opacity="0.9"/>
+
+    <!-- Connecting Lines -->
+    <line x1="27" y1="30" x2="40" y2="20" stroke="url(#flowGradient)" stroke-width="2" opacity="0.6"/>
+    <line x1="27" y1="40" x2="40" y2="50" stroke="url(#flowGradient)" stroke-width="2" opacity="0.6"/>
+    <line x1="60" y1="20" x2="73" y2="30" stroke="url(#flowGradient)" stroke-width="2" opacity="0.6"/>
+    <line x1="60" y1="50" x2="73" y2="40" stroke="url(#flowGradient)" stroke-width="2" opacity="0.6"/>
+
+    <!-- Center glow -->
+    <circle cx="50" cy="35" r="6" fill="url(#flowGradient)" opacity="0.4"/>
+
+    <!-- Agent symbols -->
+    <text x="15" y="39" font-family="monospace" font-size="10" fill="white" text-anchor="middle">A</text>
+    <text x="85" y="39" font-family="monospace" font-size="10" fill="white" text-anchor="middle">A</text>
+  </g>
+
+  <!-- Text: Open Agent Flow -->
+  <text x="125" y="55" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#1e293b">
+    <tspan fill="url(#flowGradient)">Open</tspan>
+    <tspan fill="#334155">Agent</tspan>
+    <tspan fill="url(#flowGradient)">Flow</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="125" y="80" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#64748b">
+    Distributed Agentic AI Workflows
+  </text>
+
+  <!-- Decorative flow line -->
+  <path d="M125 95 Q200 85 280 95 Q320 100 360 90"
+        stroke="url(#flowGradient)"
+        stroke-width="2"
+        fill="none"
+        opacity="0.4"
+        stroke-linecap="round"/>
+</svg>
