@@ -1,20 +1,14 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/v10z/openagentflow/main/docs/logo.svg" alt="OpenAgentFlow Logo" width="400">
-</p>
-
-<h1 align="center">Open Agent Flow</h1>
-
-<p align="center">
-  <strong>Distributed Agentic AI Workflows with Graph-Native Reasoning Traces</strong>
+  <img src="https://raw.githubusercontent.com/v10z/openagentflow/main/docs/logo.svg" alt="OpenAgentFlow Logo" width="420">
 </p>
 
 <p align="center">
   <a href="https://github.com/v10z/openagentflow/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
   </a>
-  <a href="https://www.python.org/downloads/">
-    <img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python 3.10+">
-  </a>
+  <img src="https://raw.githubusercontent.com/v10z/openagentflow/main/docs/badge-python.svg" alt="Python 3.10+">
+  <img src="https://raw.githubusercontent.com/v10z/openagentflow/main/docs/badge-agents.svg" alt="20 Agents">
+  <img src="https://raw.githubusercontent.com/v10z/openagentflow/main/docs/badge-tools.svg" alt="107 Tools">
   <a href="https://github.com/v10z/openagentflow">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
   </a>

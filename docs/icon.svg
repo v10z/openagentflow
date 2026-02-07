@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="iconFlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#a855f7"/>
+    </linearGradient>
+    <linearGradient id="iconNode" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4"/>
+      <stop offset="100%" style="stop-color:#0891b2"/>
+    </linearGradient>
+    <filter id="iconGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="#0f172a"/>
+
+  <!-- Connection paths -->
+  <path d="M18 32 Q26 22 32 24" stroke="url(#iconFlow)" stroke-width="2" fill="none" opacity="0.8" stroke-linecap="round"/>
+  <path d="M18 32 Q26 42 32 40" stroke="url(#iconFlow)" stroke-width="2" fill="none" opacity="0.8" stroke-linecap="round"/>
+  <path d="M32 24 Q38 28 46 32" stroke="url(#iconFlow)" stroke-width="2" fill="none" opacity="0.7" stroke-linecap="round"/>
+  <path d="M32 40 Q38 36 46 32" stroke="url(#iconFlow)" stroke-width="2" fill="none" opacity="0.7" stroke-linecap="round"/>
+
+  <!-- Agent nodes -->
+  <circle cx="18" cy="32" r="8" fill="url(#iconNode)" filter="url(#iconGlow)"/>
+  <circle cx="46" cy="32" r="8" fill="url(#iconNode)" filter="url(#iconGlow)"/>
+
+  <!-- Tool nodes -->
+  <circle cx="32" cy="24" r="5" fill="url(#iconFlow)" opacity="0.9"/>
+  <circle cx="32" cy="40" r="5" fill="url(#iconFlow)" opacity="0.9"/>
+
+  <!-- Agent A symbols -->
+  <text x="18" y="36" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white" text-anchor="middle">A</text>
+  <text x="46" y="36" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white" text-anchor="middle">A</text>
+</svg>

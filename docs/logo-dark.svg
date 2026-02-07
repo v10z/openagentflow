@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100">
+  <defs>
+    <linearGradient id="flowGradDark" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#818cf8"/>
+      <stop offset="50%" style="stop-color:#a78bfa"/>
+      <stop offset="100%" style="stop-color:#c084fc"/>
+    </linearGradient>
+    <linearGradient id="nodeGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22d3ee"/>
+      <stop offset="100%" style="stop-color:#06b6d4"/>
+    </linearGradient>
+    <filter id="glowDark" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Icon: Agent Network Graph -->
+  <g transform="translate(15, 15)">
+    <path d="M20 35 Q35 20 50 25" stroke="url(#flowGradDark)" stroke-width="2.5" fill="none" opacity="0.8" stroke-linecap="round"/>
+    <path d="M20 35 Q35 50 50 45" stroke="url(#flowGradDark)" stroke-width="2.5" fill="none" opacity="0.8" stroke-linecap="round"/>
+    <path d="M50 25 Q65 30 75 35" stroke="url(#flowGradDark)" stroke-width="2.5" fill="none" opacity="0.7" stroke-linecap="round"/>
+    <path d="M50 45 Q65 40 75 35" stroke="url(#flowGradDark)" stroke-width="2.5" fill="none" opacity="0.7" stroke-linecap="round"/>
+    <circle cx="20" cy="35" r="14" fill="url(#nodeGradDark)" filter="url(#glowDark)"/>
+    <circle cx="50" cy="25" r="10" fill="url(#flowGradDark)" opacity="0.9"/>
+    <circle cx="50" cy="45" r="10" fill="url(#flowGradDark)" opacity="0.9"/>
+    <circle cx="75" cy="35" r="14" fill="url(#nodeGradDark)" filter="url(#glowDark)"/>
+    <text x="20" y="40" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">A</text>
+    <text x="75" y="40" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">A</text>
+    <text x="50" y="29" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white" text-anchor="middle">T</text>
+    <text x="50" y="49" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white" text-anchor="middle">T</text>
+  </g>
+
+  <!-- Text for dark mode -->
+  <g transform="translate(110, 0)">
+    <text y="45" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="32" font-weight="800">
+      <tspan fill="#818cf8">Open</tspan><tspan fill="#f1f5f9">Agent</tspan><tspan fill="#a78bfa">Flow</tspan>
+    </text>
+    <text y="70" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8" font-weight="500">
+      Distributed Agentic AI Workflows
+    </text>
+  </g>
+
+  <path d="M110 82 C150 78, 200 86, 280 80 S340 76, 380 82"
+        stroke="url(#flowGradDark)"
+        stroke-width="2"
+        fill="none"
+        opacity="0.4"
+        stroke-linecap="round"/>
+</svg>
