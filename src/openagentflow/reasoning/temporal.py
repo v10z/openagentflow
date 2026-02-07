@@ -236,7 +236,7 @@ class TemporalRecursion(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt="You are a meticulous strategic planner.",
+            system="You are a meticulous strategic planner.",
         )
 
         step = self._make_step(
@@ -299,7 +299,7 @@ class TemporalRecursion(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt=(
+            system=(
                 f"You are an experienced practitioner reviewing from "
                 f"the vantage point of {perspective}. Be critical and honest."
             ),
@@ -378,7 +378,7 @@ class TemporalRecursion(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt="You are a meticulous planner incorporating hindsight.",
+            system="You are a meticulous planner incorporating hindsight.",
         )
 
         step = self._make_step(
@@ -436,7 +436,7 @@ class TemporalRecursion(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt="You are a clear, comprehensive communicator.",
+            system="You are a clear, comprehensive communicator.",
         )
 
         step = self._make_step(

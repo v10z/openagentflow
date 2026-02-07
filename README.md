@@ -8,101 +8,30 @@
   </a>
   <img src="https://raw.githubusercontent.com/v10z/openagentflow/main/docs/badge-python.svg" alt="Python 3.10+">
   <img src="https://raw.githubusercontent.com/v10z/openagentflow/main/docs/badge-agents.svg" alt="20 Agents">
-  <img src="https://raw.githubusercontent.com/v10z/openagentflow/main/docs/badge-tools.svg" alt="107 Tools">
+  <img src="https://raw.githubusercontent.com/v10z/openagentflow/main/docs/badge-tools.svg" alt="99 Tools">
   <a href="https://github.com/v10z/openagentflow">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
   </a>
 </p>
 
 <p align="center">
-  <a href="#features">Features</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#quick-start">Quick Start</a> •
-  <a href="#agents">20 Agents</a> •
-  <a href="#tools">99 Tools</a> •
-  <a href="#reasoning-engines">10 Reasoning Engines</a> •
-  <a href="#memory-system">Memory</a> •
-  <a href="#architecture">Architecture</a>
+  Build autonomous AI agents with four decorators, ten reasoning engines, and full execution tracing.
+</p>
+
+<p align="center">
+  <a href="docs/getting-started.md">Getting Started</a> &middot;
+  <a href="docs/agents.md">Agents</a> &middot;
+  <a href="docs/tools.md">Tools</a> &middot;
+  <a href="docs/reasoning.md">Reasoning</a> &middot;
+  <a href="docs/memory.md">Memory</a> &middot;
+  <a href="docs/configuration.md">Configuration</a>
 </p>
 
 ---
 
-## Overview
+## What is OpenAgentFlow?
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                                                                             │
-│   ╔═══════════════════════════════════════════════════════════════════╗    │
-│   ║                      OPEN AGENT FLOW                              ║    │
-│   ╠═══════════════════════════════════════════════════════════════════╣    │
-│   ║                                                                   ║    │
-│   ║    @agent ──────► @tool ──────► @chain ──────► @swarm            ║    │
-│   ║       │             │             │              │                ║    │
-│   ║       ▼             ▼             ▼              ▼                ║    │
-│   ║   ┌───────┐    ┌───────┐    ┌───────┐    ┌────────────┐          ║    │
-│   ║   │ LLM   │    │ Pure  │    │Serial │    │  Parallel  │          ║    │
-│   ║   │Powered│    │Python │    │ Exec  │    │ + Consensus│          ║    │
-│   ║   └───────┘    └───────┘    └───────┘    └────────────┘          ║    │
-│   ║                                                                   ║    │
-│   ╠═══════════════════════════════════════════════════════════════════╣    │
-│   ║   20+ Agents │ 99 Tools │ 10 Reasoning Engines │ 3-Tier Memory  ║    │
-│   ╚═══════════════════════════════════════════════════════════════════╝    │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
-
-Open Agent Flow is a Python framework for building autonomous AI agents with:
-
-- **Graph-native reasoning traces** - Every thought, tool call, and decision recorded
-- **Multi-LLM support** - Anthropic Claude, OpenAI GPT, AWS Bedrock, Ollama
-- **20 specialized agents** - Code review, security, testing, documentation, and more
-- **99 pure Python tools** - Text, code, data, web, math, media, datetime, AI, system utilities
-- **10 reasoning engines** - Dialectical, Dream-Wake, Meta-Cognitive, Adversarial, Evolutionary, Fractal, Resonance, Temporal, Annealing, Socratic
-- **3-tier memory system** - Fleeting, short-term, long-term with auto-forget, auto-summarize, auto-prune
-- **JIT Meta-Agent** - Agent that creates new tools at runtime with sandboxed execution
-- **Graph tracing** - Full DAG of every agent run (SQLite default, Gremlin for production)
-- **Ollama support** - Local-first AI with zero API keys needed
-- **Zero API key mode** - Works with Claude Code CLI (no key needed!)
-
-## Features
-
-```python
-@agent    # Autonomous AI agent with ReAct loop
-@tool     # Pure Python function, auto-schema from type hints
-@chain    # Sequential pipeline of agents
-@swarm    # Parallel execution + consensus synthesis
-```
-
-## Installation
-
-```bash
-# Core package
-pip install openagentflow
-
-# With Anthropic Claude
-pip install openagentflow[anthropic]
-
-# With all providers
-pip install openagentflow[all]
-
-# Development
-pip install -e ".[dev]"
-```
-
-## Quick Start
-
-### Define a Tool
-
-```python
-from openagentflow import tool
-
-@tool
-def calculate(expression: str) -> float:
-    """Evaluate a math expression safely."""
-    return eval(expression)  # Use safe evaluator in production
-```
-
-### Define an Agent
+OpenAgentFlow is a Python framework for building autonomous AI agents that think, act, and remember. Every thought, tool call, and decision is recorded as a graph trace you can inspect, debug, and replay.
 
 ```python
 from openagentflow import agent, tool
@@ -110,397 +39,262 @@ from openagentflow import agent, tool
 @tool
 def search(query: str) -> list[dict]:
     """Search for information."""
-    return [{"title": "Result", "url": "https://..."}]
+    return [{"title": "Result", "url": "https://example.com"}]
 
 @agent(model="claude-sonnet-4-20250514", tools=[search])
 async def researcher(question: str) -> str:
-    """Research agent that searches and synthesizes."""
-    pass
+    """Research agent that searches and synthesizes answers."""
+    pass  # ReAct loop handles execution
+
+result = await researcher("What are the latest AI trends?")
+print(result.output)
 ```
 
-### Run the Agent
+Four decorators cover every agent pattern:
 
-```python
-import asyncio
+| Decorator | Pattern | What it does |
+|-----------|---------|-------------|
+| `@agent` | Autonomous | LLM-powered ReAct loop with tool use |
+| `@tool` | Function | Pure Python with auto-generated JSON Schema |
+| `@chain` | Sequential | Pipeline of agents, output flows to next input |
+| `@swarm` | Parallel | Run agents concurrently, synthesize consensus |
 
-async def main():
-    result = await researcher("What are AI trends in 2025?")
-    print(result.output)
+## Architecture
 
-asyncio.run(main())
+```mermaid
+graph TD
+    subgraph Interface ["Interface Layer"]
+        DA["@agent"] ~~~ DT["@tool"] ~~~ DC["@chain"] ~~~ DS["@swarm"]
+    end
+
+    subgraph Intelligence ["Intelligence Layer"]
+        R["10 Reasoning Engines"] ~~~ P["5 LLM Providers"]
+    end
+
+    subgraph Knowledge ["Knowledge Layer"]
+        M["3-Tier Memory"] ~~~ G["Graph Traces"]
+    end
+
+    subgraph Execution ["Execution Layer"]
+        AG["20 Agents"] ~~~ TL["99 Tools"] ~~~ D["Distributed Compute"]
+    end
+
+    Interface --> Intelligence --> Knowledge --> Execution
+
+    style Interface fill:#0f3460,stroke:#e94560,color:#fff
+    style Intelligence fill:#533483,stroke:#e94560,color:#fff
+    style Knowledge fill:#1a1a2e,stroke:#16c79a,color:#fff
+    style Execution fill:#2b2d42,stroke:#f5a623,color:#fff
 ```
 
-### Chain Agents (Sequential)
+## Install
 
-```python
-from openagentflow import agent, chain
-
-@agent(model="claude-sonnet-4-20250514")
-async def planner(task: str) -> str:
-    """Break down a task."""
-    pass
-
-@agent(model="claude-sonnet-4-20250514")
-async def executor(plan: str) -> str:
-    """Execute the plan."""
-    pass
-
-@chain(agents=["planner", "executor"])
-async def pipeline(task: str) -> str:
-    """Plan then execute."""
-    pass
+```bash
+pip install openagentflow            # Core
+pip install openagentflow[anthropic] # + Anthropic Claude
+pip install openagentflow[all]       # + All providers
 ```
 
-### Swarm Agents (Parallel + Consensus)
+No API key required — works out of the box with [Claude Code CLI](https://docs.anthropic.com/claude-code) or local [Ollama](https://ollama.ai) models.
+
+## Key Features
+
+### 10 Reasoning Engines
+
+Go beyond basic ReAct and Chain-of-Thought. Each engine implements a cognitive architecture that structures *how* the LLM thinks, not just *what* it's asked.
 
 ```python
-from openagentflow import agent, swarm
+from openagentflow.reasoning import AdversarialSelfPlay
 
-@agent(model="claude-sonnet-4-20250514")
-async def reviewer_1(code: str) -> str:
-    """First reviewer perspective."""
-    pass
-
-@agent(model="claude-sonnet-4-20250514")
-async def reviewer_2(code: str) -> str:
-    """Second reviewer perspective."""
-    pass
-
-@swarm(agents=["reviewer_1", "reviewer_2"], strategy="synthesis")
-async def code_review(code: str) -> str:
-    """Get consensus from multiple reviewers."""
-    pass
-```
-
-## Agents
-
-Open Agent Flow includes **20 specialized agents** for code review and improvement:
-
-### Code Quality (5 agents)
-| Agent | Purpose |
-|-------|---------|
-| `style_enforcer` | PEP 8, naming conventions, formatting |
-| `complexity_analyzer` | Cyclomatic complexity, nesting depth |
-| `dead_code_hunter` | Unused imports, variables, functions |
-| `pattern_detector` | Anti-patterns, code smells |
-| `consistency_checker` | Style consistency across codebase |
-
-### Security (2 agents)
-| Agent | Purpose |
-|-------|---------|
-| `vulnerability_scanner` | SQL injection, XSS, command injection |
-| `secrets_detector` | Hardcoded secrets, API keys, passwords |
-
-### Documentation (2 agents)
-| Agent | Purpose |
-|-------|---------|
-| `docstring_generator` | Generate/improve docstrings |
-| `readme_writer` | README, changelog, API docs |
-
-### Testing (2 agents)
-| Agent | Purpose |
-|-------|---------|
-| `test_generator` | Unit test generation |
-| `coverage_analyzer` | Test coverage analysis |
-
-### Refactoring (2 agents)
-| Agent | Purpose |
-|-------|---------|
-| `code_modernizer` | Python 3.10+ syntax updates |
-| `architecture_advisor` | Design patterns, SOLID principles |
-
-### Creative (4 agents)
-| Agent | Purpose |
-|-------|---------|
-| `code_explainer` | Explain code in plain English |
-| `idea_generator` | Feature ideas, improvements |
-| `code_translator` | Convert between styles (async, OOP, functional) |
-| `name_suggester` | Better variable/function names |
-
-### Research (3 agents)
-| Agent | Purpose |
-|-------|---------|
-| `dependency_researcher` | Analyze and suggest dependencies |
-| `performance_profiler` | Performance analysis |
-| `best_practices_advisor` | Industry best practices |
-
-### Usage
-
-```python
-from openagentflow.agents import code_quality, security
-
-# Use in a swarm for comprehensive review
-@swarm(agents=[
-    "style_enforcer",
-    "complexity_analyzer",
-    "vulnerability_scanner",
-    "secrets_detector"
-], strategy="synthesis")
-async def full_review(code: str) -> dict:
-    """Comprehensive code review."""
-    pass
-```
-
-## Tools
-
-Open Agent Flow includes **99 pure Python tools** across 9 categories:
-
-### Text Processing (15 tools)
-```python
-from openagentflow.tools import text
-
-text.extract_emails("Contact: hello@example.com")  # ['hello@example.com']
-text.text_to_slug("Hello World!")                   # 'hello-world'
-text.text_to_morse("SOS")                           # '... --- ...'
-text.detect_language("Bonjour le monde")            # 'french'
-text.find_palindromes("A man a plan a canal")       # ['a', 'a', 'a']
-```
-
-### Code Analysis (15 tools)
-```python
-from openagentflow.tools import code
-
-code.calculate_complexity(source)      # Cyclomatic complexity
-code.extract_functions(source)         # List of functions with signatures
-code.find_todos(source)                # TODO/FIXME/XXX comments
-code.find_magic_numbers(source)        # Hardcoded numbers
-code.check_naming_convention(source)   # PEP 8 naming violations
-```
-
-### Data Transformation (15 tools)
-```python
-from openagentflow.tools import data
-
-data.json_to_csv(json_str)     # Convert JSON to CSV
-data.csv_to_json(csv_str)      # Convert CSV to JSON
-data.flatten_json(nested)      # Flatten nested JSON
-data.yaml_to_json(yaml_str)    # YAML to JSON
-data.xml_to_dict(xml_str)      # XML to dictionary
-```
-
-### Web/HTTP (10 tools)
-```python
-from openagentflow.tools import web
-
-web.parse_url("https://example.com/path?q=1")  # URL components
-web.extract_links(html)                         # All href links
-web.html_to_markdown(html)                      # Convert to markdown
-web.validate_email("user@example.com")          # Email validation
-```
-
-### Math/Science (10 tools)
-```python
-from openagentflow.tools import math
-
-math.prime_factors(84)           # [2, 2, 3, 7]
-math.is_prime(17)                # True
-math.fibonacci(10)               # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
-math.statistics_summary([1,2,3]) # mean, median, mode, std_dev
-math.convert_units(100, "km", "miles")  # 62.137...
-```
-
-### Media (8 tools)
-```python
-from openagentflow.tools import media
-
-media.color_hex_to_rgb("#FF5733")  # (255, 87, 51)
-media.color_rgb_to_hex(255, 87, 51) # '#FF5733'
-media.aspect_ratio(1920, 1080)      # '16:9'
-media.generate_qr_data("https://...")  # QR code ASCII
-```
-
-### Date/Time (8 tools)
-```python
-from openagentflow.tools import datetime
-
-datetime.parse_date("Jan 15, 2025")       # ISO format
-datetime.date_difference("2025-01-01", "2025-12-31")  # Days between
-datetime.get_weekday("2025-01-15")        # 'Wednesday'
-datetime.timestamp_to_date(1704067200)    # ISO date
-```
-
-### AI/ML Helpers (8 tools)
-```python
-from openagentflow.tools import ai
-
-ai.count_tokens("Hello world", model="gpt-4")  # Token estimate
-ai.split_into_chunks(long_text, chunk_size=1000)  # Chunking
-ai.extract_keywords(text, top_n=10)  # Key terms
-ai.estimate_cost(1000, 500, "gpt-4")  # API cost estimate
-```
-
-### System/File (10 tools)
-```python
-from openagentflow.tools import system
-
-system.human_readable_size(1048576)   # '1.00 MB'
-system.sanitize_filename("file?.txt") # 'file.txt'
-system.glob_to_regex("*.py")          # Regex pattern
-system.parse_env_file(env_content)    # Dict of env vars
-```
-
-## Reasoning Engines
-
-OpenAgentFlow includes **10 advanced reasoning strategies** that go beyond basic ReAct/CoT/ToT:
-
-```python
-from openagentflow.reasoning import (
-    DialecticalSpiral,    # Thesis-Antithesis-Synthesis spiral
-    DreamWakeCycle,       # Divergent-Convergent oscillation
-    MetaCognitiveLoop,    # Reasoning about reasoning
-    AdversarialSelfPlay,  # Red/Blue/Judge tribunal
-    EvolutionaryThought,  # Darwinian selection on ideas
-    FractalRecursion,     # Self-similar reasoning at every scale
-    ResonanceNetwork,     # Thought amplification network
-    TemporalRecursion,    # Future-self pre-mortem
-    SimulatedAnnealing,   # Temperature-based exploration
-    SocraticInterrogation # Progressive assumption testing
-)
-
-# Example: Adversarial reasoning for robust solutions
 engine = AdversarialSelfPlay(max_rounds=5)
 trace = await engine.reason("Design a secure auth system", provider)
-print(trace.final_output)  # Solution hardened through Red/Blue debate
-print(f"Resolved in {len(trace.steps)} steps")
+# Red team attacks, Blue team defends, Judge decides
+print(trace.final_output)
 ```
 
-### Decision Guide
+| Engine | Strategy | Best for |
+|--------|----------|----------|
+| `DialecticalSpiral` | Thesis / Antithesis / Synthesis | Deep analysis |
+| `DreamWakeCycle` | Divergent / Convergent oscillation | Creative solutions |
+| `MetaCognitiveLoop` | Reasoning about reasoning | Complex planning |
+| `AdversarialSelfPlay` | Red / Blue / Judge tribunal | Robust validation |
+| `EvolutionaryThought` | Darwinian selection on ideas | Optimization |
+| `FractalRecursion` | Self-similar at every scale | Hierarchical tasks |
+| `ResonanceNetwork` | Thought amplification network | Coherent synthesis |
+| `TemporalRecursion` | Future-self pre-mortem | Risk planning |
+| `SimulatedAnnealing` | Temperature-based exploration | Escaping local optima |
+| `SocraticInterrogation` | Progressive questioning | Critical thinking |
 
-| Need | Use |
-|------|-----|
-| Deep analysis | `DialecticalSpiral` - contradictions drive insight |
-| Creative solutions | `DreamWakeCycle` - unconstrained ideation + validation |
-| Complex planning | `MetaCognitiveLoop` - adapts strategy when stuck |
-| Robust outputs | `AdversarialSelfPlay` - only accepts what survives attack |
-| Optimization | `EvolutionaryThought` - recombines partial solutions |
-| Hierarchical tasks | `FractalRecursion` - strategic failures trigger strategic fixes |
-| Coherent synthesis | `ResonanceNetwork` - consistent ideas amplify |
-| Risk planning | `TemporalRecursion` - pre-mortem from future perspective |
-| Escaping local optima | `SimulatedAnnealing` - controlled randomness |
-| Critical thinking | `SocraticInterrogation` - expose hidden assumptions |
+[Full documentation](docs/reasoning.md)
 
-See [reasoning/README.md](src/openagentflow/reasoning/README.md) for full documentation.
+### 99 Built-in Tools
 
-## Memory System
+Pure Python functions across 9 categories — no external dependencies, instant schema from type hints.
 
-Three-tier memory hierarchy with automatic lifecycle management:
+```python
+from openagentflow.tools import text, code, math, data
 
+text.extract_emails("Contact bob@test.com")   # ['bob@test.com']
+code.calculate_complexity(source)              # Cyclomatic complexity score
+math.prime_factors(84)                         # [2, 2, 3, 7]
+data.json_to_csv(json_string)                  # CSV conversion
 ```
-┌──────────────────────────────────────────────────────────┐
-│                      Memory Manager                        │
-├──────────────┬──────────────────┬────────────────────────┤
-│   FLEETING   │    SHORT-TERM    │       LONG-TERM         │
-│  Per-turn    │    Session       │    Persistent           │
-│  scratchpad  │  auto-summarize  │   graph-backed          │
-│  auto-clear  │  auto-prune      │   auto-decay            │
-├──────────────┴──────────────────┴────────────────────────┤
-│           Garbage Collector (auto-management)              │
-│  forget · summarize · prune · deduplicate · improve        │
-└──────────────────────────────────────────────────────────┘
+
+| Category | Count | Examples |
+|----------|-------|---------|
+| Text Processing | 15 | slug, morse, language detection, palindromes |
+| Code Analysis | 15 | complexity, functions, TODOs, naming, maintainability |
+| Data Transform | 15 | JSON/CSV/YAML/XML conversion, base64, diff |
+| Web/HTTP | 10 | URL parsing, link extraction, HTML to markdown |
+| Math/Science | 10 | primes, fibonacci, statistics, unit conversion |
+| Media | 8 | color conversion, aspect ratio, QR data |
+| Date/Time | 8 | parsing, difference, weekday, business days |
+| AI/ML Helpers | 8 | token counting, chunking, keywords, cost estimation |
+| System/File | 10 | file size, sanitize names, UUID, hashing, env parsing |
+
+[Full documentation](docs/tools.md)
+
+### 20 Specialized Agents
+
+Pre-built agents for code quality, security, testing, documentation, refactoring, and more.
+
+```python
+from openagentflow import swarm
+
+@swarm(agents=["style_enforcer", "vulnerability_scanner", "test_generator"],
+       strategy="synthesis")
+async def full_review(code: str) -> dict:
+    """Run three agents in parallel, synthesize results."""
+    pass
+```
+
+[Full documentation](docs/agents.md)
+
+### 3-Tier Memory System
+
+Agents remember across turns and sessions with automatic lifecycle management.
+
+```mermaid
+graph LR
+    F["Fleeting<br/><i>per-turn scratchpad</i>"] --> ST["Short-Term<br/><i>session context</i>"] --> LT["Long-Term<br/><i>persistent storage</i>"]
+    GC["Garbage Collector"] -.->|"forget / summarize / prune / deduplicate"| F
+    GC -.-> ST
+    GC -.-> LT
+
+    style F fill:#533483,stroke:#e94560,color:#fff
+    style ST fill:#2b2d42,stroke:#f5a623,color:#fff
+    style LT fill:#1a1a2e,stroke:#16c79a,color:#fff
+    style GC fill:#3d0c11,stroke:#e94560,color:#fff
 ```
 
 ```python
 from openagentflow.memory import MemoryManager, MemoryTier
 
-memory = MemoryManager(graph_backend=backend)
-await memory.remember("pattern", "always check imports first", importance=0.9)
+memory = MemoryManager()
+await memory.remember("pattern", "always check imports", importance=0.9)
 results = await memory.recall("import issues")
 context = await memory.get_context_window(max_tokens=4000)
 await memory.run_gc()  # Auto-forget, prune, deduplicate
 ```
 
-See [memory/README.md](src/openagentflow/memory/README.md) for full documentation.
+[Full documentation](docs/memory.md)
 
-## Architecture
+### Graph Tracing
 
-```
-┌────────────────────────────────────────────────────────────────────┐
-│                         Open Agent Flow                            │
-├────────────────────────────────────────────────────────────────────┤
-│                                                                    │
-│   ┌──────────────────────────────────────────────────────────┐    │
-│   │                    Decorators Layer                       │    │
-│   │  @agent  │  @tool  │  @chain  │  @swarm  │  configure()  │    │
-│   └──────────────────────────────────────────────────────────┘    │
-│                              │                                     │
-│   ┌──────────────────────────▼───────────────────────────────┐    │
-│   │              Reasoning Engines (10)                       │    │
-│   │  Dialectical │ DreamWake │ MetaCognitive │ Adversarial   │    │
-│   │  Evolutionary │ Fractal │ Resonance │ Temporal │ ...     │    │
-│   └──────────────────────────────────────────────────────────┘    │
-│                              │                                     │
-│   ┌──────────────────────────▼───────────────────────────────┐    │
-│   │                   LLM Providers                           │    │
-│   │  Anthropic │ OpenAI │ Ollama │ Bedrock │ Claude Code CLI │    │
-│   └──────────────────────────────────────────────────────────┘    │
-│                              │                                     │
-│   ┌──────────────────────────▼───────────────────────────────┐    │
-│   │               Specialized Agents (20+)                    │    │
-│   │  Code Quality │ Security │ Testing │ Documentation       │    │
-│   │  Refactoring  │ Creative │ Research │ Meta (JIT)          │    │
-│   └──────────────────────────────────────────────────────────┘    │
-│                              │                                     │
-│   ┌──────────────────────────▼───────────────────────────────┐    │
-│   │                Pure Python Tools (99+)                    │    │
-│   │  Text │ Code │ Data │ Web │ Math │ Media │ DateTime │ AI │    │
-│   └──────────────────────────────────────────────────────────┘    │
-│                              │                                     │
-│   ┌──────────────────────────▼───────────────────────────────┐    │
-│   │                   Runtime Layer                           │    │
-│   │  Executor │ Memory (3-tier) │ Graph Traces │ Guardrails  │    │
-│   └──────────────────────────────────────────────────────────┘    │
-│                                                                    │
-└────────────────────────────────────────────────────────────────────┘
-```
-
-## Zero API Key Mode
-
-Open Agent Flow automatically detects and uses the Claude Code CLI if installed:
+Every execution is a DAG you can query, visualize, and replay.
 
 ```python
-# No API key needed! Just have Claude Code CLI installed.
-@agent(model="claude-sonnet-4-20250514")
-async def my_agent(query: str) -> str:
-    """This works without any API key if Claude Code CLI is available."""
-    pass
+from openagentflow.graph import SQLiteGraphBackend
+
+backend = SQLiteGraphBackend(":memory:")
+await backend.add_vertex("agent-1", "agent", {"name": "planner", "run_id": "r1"})
+await backend.add_vertex("tool-1", "tool", {"name": "search", "run_id": "r1"})
+await backend.add_edge("agent-1", "tool-1", "CALLED", {"duration_ms": 150})
+trace = await backend.get_full_trace("r1")
 ```
 
-Provider selection order:
-1. Direct `api_key` parameter
-2. `configure(anthropic_api_key="...")`
-3. `ANTHROPIC_API_KEY` environment variable
-4. **Claude Code CLI** (no key needed!)
-5. MockProvider (for testing)
+SQLite for development, [Apache TinkerPop](https://tinkerpop.apache.org/) for production. [Full documentation](docs/graph.md)
 
-## Configuration
+### JIT Meta-Agent
 
-### Environment Variables
-```bash
-ANTHROPIC_API_KEY=sk-ant-...
-OPENAI_API_KEY=sk-...
-```
+Agents that create new tools at runtime through sandboxed code generation.
 
-### Programmatic Configuration
 ```python
-from openagentflow import configure
+from openagentflow.meta import ToolFactory
 
-configure(
-    anthropic_api_key="sk-ant-...",
-    openai_api_key="sk-...",
+factory = ToolFactory()
+factory.create_tool(
+    name="double",
+    description="Double a number",
+    source_code="def double(n: int) -> int:\n    return n * 2",
 )
+factory.test_tool("double", {"n": 21})  # Returns 42
 ```
+
+[Full documentation](docs/meta-agent.md)
+
+### Distributed Compute
+
+Distribute workloads across HTTP, Docker, Kubernetes, and SSH backends.
+
+```python
+from openagentflow.distributed import ComputeCluster, ComputeNode, ComputeBackend
+
+cluster = ComputeCluster(name="inference")
+cluster.add_node(ComputeNode(
+    node_id="gpu1",
+    backend=ComputeBackend.HTTP,
+    endpoint="http://gpu1:11434",
+))
+```
+
+[Full documentation](docs/distributed.md)
+
+### 5 LLM Providers
+
+| Provider | API Key | Local |
+|----------|---------|-------|
+| Anthropic Claude | Required | No |
+| OpenAI GPT | Required | No |
+| Ollama | None | Yes |
+| Claude Code CLI | None | Yes |
+| Mock | None | Yes |
+
+## Claude Code Integration
+
+OpenAgentFlow ships with a [Claude Code](https://docs.anthropic.com/claude-code) skill that lets Claude use the framework during its own work.
+
+```bash
+# Install the skill:
+mkdir -p ~/.claude/commands
+cp .claude/commands/openagentflow.md ~/.claude/commands/
+```
+
+Then use `/openagentflow` in Claude Code to activate it. [Full documentation](docs/claude-code-skill.md)
+
+## Documentation
+
+| Guide | Description |
+|-------|-------------|
+| [Getting Started](docs/getting-started.md) | Installation, first agent, configuration |
+| [Agents](docs/agents.md) | 20 specialized agents across 8 categories |
+| [Tools](docs/tools.md) | 99 built-in tools across 9 categories |
+| [Reasoning Engines](docs/reasoning.md) | 10 cognitive architectures for structured thinking |
+| [Memory System](docs/memory.md) | 3-tier memory with automatic lifecycle management |
+| [Graph Tracing](docs/graph.md) | Execution DAG recording and querying |
+| [Meta-Agent](docs/meta-agent.md) | JIT tool creation with sandboxed execution |
+| [Distributed Compute](docs/distributed.md) | Multi-node workload distribution |
+| [Configuration](docs/configuration.md) | Providers, API keys, environment variables |
+| [Claude Code Skill](docs/claude-code-skill.md) | Using OpenAgentFlow as a Claude Code skill |
 
 ## Contributing
 
-Contributions welcome! Please read the contributing guidelines first.
+Contributions welcome! Please open an issue or pull request.
 
 ```bash
-# Clone and install
 git clone https://github.com/v10z/openagentflow.git
 cd openagentflow
 pip install -e ".[dev]"
-
-# Run tests
 pytest tests/ -v
 ```
 
@@ -511,5 +305,5 @@ MIT License - see [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  Made with intelligence by AI agents
+  Built with intelligence by AI agents
 </p>

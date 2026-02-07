@@ -267,7 +267,7 @@ class SocraticInterrogation(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt="You are a knowledgeable, thoughtful analyst.",
+            system="You are a knowledgeable, thoughtful analyst.",
         )
 
         step = self._make_step(
@@ -331,7 +331,7 @@ class SocraticInterrogation(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt="You are a rigorous Socratic questioner. Return valid JSON only.",
+            system="You are a rigorous Socratic questioner. Return valid JSON only.",
         )
 
         questions = self._parse_questions(raw, self.question_types, self.questions_per_type)
@@ -406,7 +406,7 @@ class SocraticInterrogation(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt=(
+            system=(
                 "You are a rigorously honest self-critic. Acknowledge real "
                 "weaknesses. Return valid JSON only."
             ),
@@ -484,7 +484,7 @@ class SocraticInterrogation(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt="You are a rigorous thinker refining your position.",
+            system="You are a rigorous thinker refining your position.",
         )
 
         step = self._make_step(
@@ -542,7 +542,7 @@ class SocraticInterrogation(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt="You are a clear, honest communicator.",
+            system="You are a clear, honest communicator.",
         )
 
         step = self._make_step(

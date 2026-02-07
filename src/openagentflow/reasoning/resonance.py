@@ -207,7 +207,7 @@ class ResonanceNetwork(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt="You are a precise analytical reasoner. Always return valid JSON.",
+            system="You are a precise analytical reasoner. Always return valid JSON.",
         )
 
         thought_texts = self._parse_json_list(raw, self.num_seeds)
@@ -296,7 +296,7 @@ class ResonanceNetwork(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt=(
+            system=(
                 "You are a precise analytical reasoner. Return valid JSON only."
             ),
         )
@@ -495,7 +495,7 @@ class ResonanceNetwork(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt="You are a precise analytical synthesiser.",
+            system="You are a precise analytical synthesiser.",
         )
 
         step = self._make_step(

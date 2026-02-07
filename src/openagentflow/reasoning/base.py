@@ -359,6 +359,27 @@ class ReasoningEngine(ABC):
         """
         ...
 
+    def _make_step(
+        self,
+        step_type: str,
+        content: str,
+        score: float = 0.0,
+        metadata: dict[str, Any] | None = None,
+        parent_step_id: str | None = None,
+    ) -> ReasoningStep:
+        """Create a :class:`ReasoningStep` with sensible defaults.
+
+        A convenience helper so engines don't have to import and construct
+        ``ReasoningStep`` directly every time.
+        """
+        return ReasoningStep(
+            step_type=step_type,
+            content=content,
+            score=score,
+            metadata=metadata or {},
+            parent_step_id=parent_step_id,
+        )
+
     async def _call_llm(
         self,
         provider: Any,
@@ -409,7 +430,8 @@ class ReasoningEngine(ABC):
             config.temperature = temperature
 
         msg_objects = [
-            Message(role=m["role"], content=m["content"]) for m in messages
+            m if isinstance(m, Message) else Message(role=m["role"], content=m["content"])
+            for m in messages
         ]
 
         result = await provider.generate(

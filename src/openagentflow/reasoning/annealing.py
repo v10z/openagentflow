@@ -282,7 +282,7 @@ class SimulatedAnnealing(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt="You are a creative problem solver.",
+            system="You are a creative problem solver.",
         )
 
     async def _generate_neighbour(
@@ -342,7 +342,7 @@ class SimulatedAnnealing(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt="You are a creative problem solver exploring the solution space.",
+            system="You are a creative problem solver exploring the solution space.",
         )
 
     # ------------------------------------------------------------------
@@ -391,7 +391,7 @@ class SimulatedAnnealing(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt="You are a rigorous evaluator. Return valid JSON only.",
+            system="You are a rigorous evaluator. Return valid JSON only.",
         )
 
         return self._parse_score(raw)
@@ -483,7 +483,7 @@ class SimulatedAnnealing(ReasoningEngine):
             provider=provider,
             messages=[Message.user(prompt)],
             trace=trace,
-            system_prompt="You are a meticulous editor and communicator.",
+            system="You are a meticulous editor and communicator.",
         )
 
         step = self._make_step(
