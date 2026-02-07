@@ -400,10 +400,6 @@ def extract_string_literals(code: str) -> list[str]:
                 strings.append(node.value)
             self.generic_visit(node)
 
-        # For older Python versions
-        def visit_Str(self, node: ast.Str) -> None:
-            strings.append(node.s)
-            self.generic_visit(node)
 
     visitor = StringVisitor()
     visitor.visit(tree)
@@ -443,15 +439,6 @@ def find_magic_numbers(code: str) -> list[dict]:
                 })
             self.generic_visit(node)
 
-        # For older Python versions
-        def visit_Num(self, node: ast.Num) -> None:
-            if node.n not in acceptable:
-                magic_numbers.append({
-                    'value': node.n,
-                    'line': node.lineno,
-                    'col': node.col_offset
-                })
-            self.generic_visit(node)
 
     visitor = NumberVisitor()
     visitor.visit(tree)

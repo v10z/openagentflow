@@ -2,13 +2,13 @@
 
 import ast
 import re
-from typing import Any
 
-from openagentflow import agent
+from openagentflow import agent, tool
 
 
 # Helper Tools
 
+@tool
 def upgrade_type_hints(code: str) -> str:
     """
     Upgrade to modern type hints (Python 3.10+).
@@ -49,6 +49,7 @@ def upgrade_type_hints(code: str) -> str:
     return code
 
 
+@tool
 def use_match_statements(code: str) -> str:
     """
     Convert if-elif chains to match statements where beneficial.
@@ -84,6 +85,7 @@ def use_match_statements(code: str) -> str:
     return code
 
 
+@tool
 def apply_walrus(code: str) -> str:
     """
     Apply walrus operator (:=) where beneficial.
@@ -112,6 +114,7 @@ def apply_walrus(code: str) -> str:
     return code
 
 
+@tool
 def suggest_patterns(code: str) -> list[dict]:
     """
     Suggest design patterns applicable to the code.
@@ -191,6 +194,7 @@ def suggest_patterns(code: str) -> list[dict]:
     ]
 
 
+@tool
 def detect_violations(code: str) -> list[dict]:
     """
     Detect SOLID principle violations in the code.
@@ -294,6 +298,7 @@ def detect_violations(code: str) -> list[dict]:
     ]
 
 
+@tool
 def propose_restructuring(code: str) -> str:
     """
     Propose code restructuring improvements.
@@ -385,10 +390,10 @@ def propose_restructuring(code: str) -> str:
 
     # Check for magic numbers
     for node in ast.walk(tree):
-        if isinstance(node, ast.Num):
-            if isinstance(node.n, (int, float)) and node.n not in (0, 1, -1):
+        if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+            if node.value not in (0, 1, -1):
                 proposals.append(
-                    f"Magic number '{node.n}' detected. Consider defining as a named constant."
+                    f"Magic number '{node.value}' detected. Consider defining as a named constant."
                 )
                 break
 
@@ -443,7 +448,7 @@ async def code_modernizer(code: str) -> str:
     Returns:
         Modernized code with explanations
     """
-    return code
+    pass  # ReAct loop handles execution via LLM
 
 
 # Agent 2: Architecture Advisor
@@ -493,4 +498,4 @@ async def architecture_advisor(code: str) -> str:
     Returns:
         Architectural analysis and recommendations
     """
-    return code
+    pass  # ReAct loop handles execution via LLM

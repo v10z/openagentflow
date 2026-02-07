@@ -1,10 +1,11 @@
 """Testing agents for code quality and test coverage analysis."""
 
-from openagentflow import agent
+from openagentflow import agent, tool
 
 
 # Helper tools for testing agents
 
+@tool
 def generate_unit_tests(code: str) -> str:
     """Generate pytest unit tests for the given code.
 
@@ -42,6 +43,7 @@ class TestGeneratedCode:
 """
 
 
+@tool
 def create_edge_cases(code: str) -> list[dict]:
     """Identify edge cases to test for the given code.
 
@@ -82,6 +84,7 @@ def create_edge_cases(code: str) -> list[dict]:
     return edge_cases
 
 
+@tool
 def mock_dependencies(code: str) -> str:
     """Generate mock code for external dependencies.
 
@@ -136,6 +139,7 @@ def mock_api():
 """
 
 
+@tool
 def measure_coverage(code: str, tests: str) -> dict:
     """Estimate test coverage metrics.
 
@@ -169,6 +173,7 @@ def measure_coverage(code: str, tests: str) -> dict:
     return coverage_data
 
 
+@tool
 def find_untested_paths(code: str) -> list[str]:
     """Find untested code paths in the given code.
 
@@ -190,6 +195,7 @@ def find_untested_paths(code: str) -> list[str]:
     return untested_paths
 
 
+@tool
 def suggest_test_cases(code: str) -> list[str]:
     """Suggest additional test cases for better coverage.
 

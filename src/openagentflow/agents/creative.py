@@ -2,8 +2,7 @@
 
 import ast
 import re
-from typing import List, Dict
-from openagentflow import agent
+from openagentflow import agent, tool
 
 
 # ============================================================================
@@ -11,6 +10,7 @@ from openagentflow import agent
 # ============================================================================
 
 
+@tool
 def explain_function(code: str) -> str:
     """Explain what a function does by analyzing its structure and logic."""
     try:
@@ -44,6 +44,7 @@ def explain_function(code: str) -> str:
         return "Code contains syntax errors. Unable to parse and explain."
 
 
+@tool
 def trace_flow(code: str) -> str:
     """Trace execution flow through the code."""
     try:
@@ -71,6 +72,7 @@ def trace_flow(code: str) -> str:
         return "Code contains syntax errors. Unable to trace flow."
 
 
+@tool
 def visualize_logic(code: str) -> str:
     """Create ASCII visualization of code logic structure."""
     try:
@@ -111,7 +113,8 @@ def visualize_logic(code: str) -> str:
         return "Code contains syntax errors. Unable to visualize."
 
 
-def brainstorm_features(code: str) -> List[str]:
+@tool
+def brainstorm_features(code: str) -> list[str]:
     """Suggest new features based on code analysis."""
     features = []
 
@@ -145,7 +148,8 @@ def brainstorm_features(code: str) -> List[str]:
     return features[:10]  # Return top 10
 
 
-def find_opportunities(code: str) -> List[str]:
+@tool
+def find_opportunities(code: str) -> list[str]:
     """Find improvement opportunities in the code."""
     opportunities = []
 
@@ -169,7 +173,7 @@ def find_opportunities(code: str) -> List[str]:
                     opportunities.append("Consider using polymorphism instead of if/else chains")
 
         # Check for hardcoded values
-        literals = [n for n in ast.walk(tree) if isinstance(n, (ast.Str, ast.Num))]
+        literals = [n for n in ast.walk(tree) if isinstance(n, ast.Constant) and isinstance(n.value, (str, int, float))]
         if len(literals) > 5:
             opportunities.append("Extract magic numbers/strings into constants")
 
@@ -186,7 +190,8 @@ def find_opportunities(code: str) -> List[str]:
     return opportunities[:8]
 
 
-def suggest_integrations(code: str) -> List[str]:
+@tool
+def suggest_integrations(code: str) -> list[str]:
     """Suggest integrations based on code patterns."""
     integrations = []
 
@@ -223,6 +228,7 @@ def suggest_integrations(code: str) -> List[str]:
     return integrations[:8]
 
 
+@tool
 def to_async(code: str) -> str:
     """Convert synchronous code to async/await style."""
     try:
@@ -253,6 +259,7 @@ def to_async(code: str) -> str:
         return "# Syntax error in original code\n" + code
 
 
+@tool
 def to_functional(code: str) -> str:
     """Convert to functional programming style."""
     try:
@@ -278,6 +285,7 @@ def to_functional(code: str) -> str:
         return "# Syntax error\n" + code
 
 
+@tool
 def to_oop(code: str) -> str:
     """Convert to object-oriented programming style."""
     try:
@@ -313,7 +321,8 @@ def to_oop(code: str) -> str:
         return "# Syntax error\n" + code
 
 
-def suggest_names(code: str) -> Dict[str, str]:
+@tool
+def suggest_names(code: str) -> dict[str, str]:
     """Suggest better names for variables and functions."""
     suggestions = {}
 
@@ -350,6 +359,7 @@ def suggest_names(code: str) -> Dict[str, str]:
     return suggestions
 
 
+@tool
 def expand_abbreviations(name: str) -> str:
     """Expand abbreviated names to full form."""
     abbreviations = {
@@ -394,6 +404,7 @@ def expand_abbreviations(name: str) -> str:
     return name  # Return original if no expansion found
 
 
+@tool
 def semantic_rename(code: str, old_name: str, new_name: str) -> str:
     """Rename with semantic awareness (preserves structure)."""
     try:
@@ -426,7 +437,22 @@ def semantic_rename(code: str, old_name: str, new_name: str) -> str:
 
 @agent(
     model="claude-sonnet-4-20250514",
-    tools=[explain_function, trace_flow, visualize_logic]
+    tools=[explain_function, trace_flow, visualize_logic],
+    system_prompt="""You are a code explanation specialist who makes complex code easy to understand.
+
+Your responsibilities:
+1. Explain what each function does in plain English
+2. Trace execution flow through the code
+3. Create visual representations of code structure
+4. Identify key algorithms and data structures used
+
+When analyzing code:
+- Use explain_function to break down individual functions
+- Use trace_flow to map the execution path
+- Use visualize_logic to create structural diagrams
+- Explain complex logic in simple terms
+
+Be thorough but accessible. Aim for explanations that a junior developer can understand.""",
 )
 async def code_explainer(code: str) -> str:
     """
@@ -444,22 +470,26 @@ async def code_explainer(code: str) -> str:
     Returns:
         A comprehensive explanation in plain English
     """
-    return f"""Please analyze this code and provide a detailed explanation:
-
-{code}
-
-Use the available tools to:
-1. Explain what each function does
-2. Trace the execution flow
-3. Visualize the logic structure
-4. Provide a plain English summary
-
-Make the explanation clear and accessible for developers."""
+    pass  # ReAct loop handles execution via LLM
 
 
 @agent(
     model="claude-sonnet-4-20250514",
-    tools=[brainstorm_features, find_opportunities, suggest_integrations]
+    tools=[brainstorm_features, find_opportunities, suggest_integrations],
+    system_prompt="""You are a creative idea generator focused on code improvement and feature brainstorming.
+
+Your responsibilities:
+1. Brainstorm new features based on code analysis
+2. Identify improvement opportunities
+3. Suggest useful integrations with other tools and libraries
+
+When analyzing code:
+- Use brainstorm_features to generate feature ideas
+- Use find_opportunities to identify areas for improvement
+- Use suggest_integrations to recommend external tools and libraries
+- Prioritize suggestions by impact and feasibility
+
+Be creative but practical. Focus on ideas that add real value.""",
 )
 async def idea_generator(code: str) -> str:
     """
@@ -477,22 +507,26 @@ async def idea_generator(code: str) -> str:
     Returns:
         Creative suggestions for features and improvements
     """
-    return f"""Analyze this code and generate creative ideas:
-
-{code}
-
-Use the available tools to:
-1. Brainstorm new features that could be added
-2. Find opportunities for improvement
-3. Suggest integrations with other tools/libraries
-4. Provide innovative enhancement ideas
-
-Be creative and think about how this code could be extended or improved."""
+    pass  # ReAct loop handles execution via LLM
 
 
 @agent(
     model="claude-sonnet-4-20250514",
-    tools=[to_async, to_functional, to_oop]
+    tools=[to_async, to_functional, to_oop],
+    system_prompt="""You are a code style translator that converts code between programming paradigms.
+
+Your responsibilities:
+1. Convert synchronous code to async/await style
+2. Transform imperative code to functional style
+3. Restructure procedural code into object-oriented design
+
+When transforming code:
+- Use to_async to convert functions to async versions
+- Use to_functional to apply functional programming patterns
+- Use to_oop to restructure code into classes
+- Explain the trade-offs of each approach
+
+Preserve the original functionality while improving the code structure.""",
 )
 async def code_translator(code: str) -> str:
     """
@@ -509,21 +543,26 @@ async def code_translator(code: str) -> str:
     Returns:
         Converted code in different styles with explanations
     """
-    return f"""Transform this code into different programming styles:
-
-{code}
-
-Use the available tools to show:
-1. Async/await version (for concurrent operations)
-2. Functional programming version (pure functions, immutability)
-3. Object-oriented version (classes, encapsulation)
-
-Explain the benefits and tradeoffs of each style."""
+    pass  # ReAct loop handles execution via LLM
 
 
 @agent(
     model="claude-sonnet-4-20250514",
-    tools=[suggest_names, expand_abbreviations, semantic_rename]
+    tools=[suggest_names, expand_abbreviations, semantic_rename],
+    system_prompt="""You are a naming specialist focused on improving code readability through better names.
+
+Your responsibilities:
+1. Suggest better names for variables, functions, and classes
+2. Expand abbreviated names to their full, descriptive forms
+3. Perform semantic-aware renaming that preserves code structure
+
+When analyzing names:
+- Use suggest_names to identify poorly named identifiers
+- Use expand_abbreviations to expand common abbreviations
+- Use semantic_rename to safely rename identifiers across the code
+- Follow PEP 8 naming conventions
+
+Good names should be descriptive, intention-revealing, and consistent.""",
 )
 async def name_suggester(code: str) -> str:
     """
@@ -541,14 +580,4 @@ async def name_suggester(code: str) -> str:
     Returns:
         Suggestions for better names and explanations
     """
-    return f"""Analyze this code and suggest better names:
-
-{code}
-
-Use the available tools to:
-1. Suggest better names for all variables and functions
-2. Expand any abbreviations to full forms
-3. Provide examples of semantic renaming
-4. Explain naming best practices
-
-Focus on making names more descriptive, clear, and intention-revealing."""
+    pass  # ReAct loop handles execution via LLM

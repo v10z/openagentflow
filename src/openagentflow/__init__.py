@@ -74,8 +74,58 @@ from openagentflow.core.types import (
     ToolResult,
     ToolSpec,
 )
+from openagentflow.graph import (
+    GraphBackend,
+    SQLiteGraphBackend,
+    get_default_backend,
+)
+from openagentflow.memory import (
+    FleetingMemory,
+    LongTermMemory,
+    MemoryEntry,
+    MemoryGarbageCollector,
+    MemoryManager,
+    MemoryTier,
+    ShortTermMemory,
+)
+from openagentflow.meta import (
+    Sandbox,
+    SandboxExecutionError,
+    SandboxTimeoutError,
+    SandboxValidationError,
+    ToolFactory,
+    ToolFactoryError,
+)
+from openagentflow.reasoning import (
+    AdversarialSelfPlay,
+    DialecticalSpiral,
+    DreamWakeCycle,
+    EvolutionaryThought,
+    FractalRecursion,
+    MetaCognitiveLoop,
+    ReasoningEngine,
+    ReasoningStep,
+    ReasoningTrace,
+    ResonanceNetwork,
+    SimulatedAnnealing,
+    SocraticInterrogation,
+    TemporalRecursion,
+)
+from openagentflow.distributed import (
+    ComputeBackend,
+    ComputeCluster,
+    ComputeNode,
+    DistributedOllamaProvider,
+    DockerBackend,
+    KubernetesBackend,
+    LeastLoadBalancer,
+    LoadBalancer,
+    ModelAffinityBalancer,
+    RoundRobinBalancer,
+    SSHBackend,
+)
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __all__ = [
     # Configuration
     "configure",
@@ -118,4 +168,49 @@ __all__ = [
     "SwarmSpec",
     "ExecutionHash",
     "ExecutorType",
+    # Graph tracing
+    "GraphBackend",
+    "SQLiteGraphBackend",
+    "get_default_backend",
+    # Memory hierarchy
+    "MemoryManager",
+    "MemoryTier",
+    "MemoryEntry",
+    "FleetingMemory",
+    "ShortTermMemory",
+    "LongTermMemory",
+    "MemoryGarbageCollector",
+    # Meta / JIT tool creation
+    "Sandbox",
+    "SandboxValidationError",
+    "SandboxExecutionError",
+    "SandboxTimeoutError",
+    "ToolFactory",
+    "ToolFactoryError",
+    # Reasoning engines
+    "ReasoningEngine",
+    "ReasoningStep",
+    "ReasoningTrace",
+    "AdversarialSelfPlay",
+    "DialecticalSpiral",
+    "DreamWakeCycle",
+    "EvolutionaryThought",
+    "FractalRecursion",
+    "MetaCognitiveLoop",
+    "ResonanceNetwork",
+    "SimulatedAnnealing",
+    "SocraticInterrogation",
+    "TemporalRecursion",
+    # Distributed compute
+    "ComputeBackend",
+    "ComputeCluster",
+    "ComputeNode",
+    "LoadBalancer",
+    "RoundRobinBalancer",
+    "LeastLoadBalancer",
+    "ModelAffinityBalancer",
+    "KubernetesBackend",
+    "DockerBackend",
+    "SSHBackend",
+    "DistributedOllamaProvider",
 ]

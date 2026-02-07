@@ -341,14 +341,26 @@ def _get_provider(config: ModelConfig, api_key: str | None = None) -> "BaseLLMPr
             )
             return ClaudeCodeProvider()
 
+        # Try Ollama as a local fallback
+        from openagentflow.llm.providers.ollama_ import OllamaProvider, is_ollama_available
+
+        if is_ollama_available():
+            print(
+                "[OpenAgentFlow] No API key found and Claude Code CLI not installed, "
+                "but Ollama is running locally! Using Ollama as fallback provider."
+            )
+            return OllamaProvider()
+
         # Fall back to mock provider
         from openagentflow.llm.providers.mock import MockProvider
 
         print(
-            "[OpenAgentFlow] No Anthropic API key found and Claude Code CLI not installed. "
+            "[OpenAgentFlow] No Anthropic API key found, Claude Code CLI not installed, "
+            "and Ollama not running. "
             "Options: 1) configure(anthropic_api_key='...') "
             "2) Install Claude Code CLI "
-            "3) Set ANTHROPIC_API_KEY env var. "
+            "3) Start Ollama (ollama serve) "
+            "4) Set ANTHROPIC_API_KEY env var. "
             "Using MockProvider for development/testing."
         )
         return MockProvider(verbose=True)
@@ -379,10 +391,17 @@ def _get_provider(config: ModelConfig, api_key: str | None = None) -> "BaseLLMPr
         return MockProvider(verbose=True)
 
     elif config.provider == LLMProvider.OLLAMA:
+        from openagentflow.llm.providers.ollama_ import OllamaProvider, is_ollama_available
+
+        base_url = "http://localhost:11434"
+        if is_ollama_available(base_url):
+            return OllamaProvider(base_url=base_url)
+
         from openagentflow.llm.providers.mock import MockProvider
 
         print(
-            "[OpenAgentFlow] Ollama not yet implemented. "
+            "[OpenAgentFlow] Ollama server not reachable at "
+            f"{base_url}. Start it with: ollama serve\n"
             "Using MockProvider for development/testing."
         )
         return MockProvider(verbose=True)
@@ -395,7 +414,15 @@ def _get_provider(config: ModelConfig, api_key: str | None = None) -> "BaseLLMPr
 
 
 def _parse_model_string(model_str: str) -> ModelConfig:
-    """Parse a model string into ModelConfig."""
+    """Parse a model string into ModelConfig.
+
+    Supports an explicit ``provider/model`` prefix syntax (e.g.
+    ``"ollama/llama3"``) as well as heuristic inference from the model name.
+    """
+    # ----- Explicit provider prefix (e.g. "ollama/llama3") -----
+    if model_str.startswith("ollama/"):
+        return ModelConfig(provider=LLMProvider.OLLAMA, model_id=model_str)
+
     # Map common model strings to full configs
     model_map = {
         "claude-sonnet-4-20250514": (LLMProvider.ANTHROPIC, "claude-sonnet-4-20250514"),
@@ -413,11 +440,18 @@ def _parse_model_string(model_str: str) -> ModelConfig:
         return ModelConfig(provider=provider, model_id=model_id)
 
     # Try to infer provider from model string
-    if "claude" in model_str.lower():
+    lower = model_str.lower()
+    if "claude" in lower:
         return ModelConfig(provider=LLMProvider.ANTHROPIC, model_id=model_str)
-    elif "gpt" in model_str.lower():
+    elif "gpt" in lower:
         return ModelConfig(provider=LLMProvider.OPENAI, model_id=model_str)
-    elif "llama" in model_str.lower() or "mistral" in model_str.lower():
+    elif any(
+        name in lower
+        for name in (
+            "llama", "mistral", "mixtral", "codellama", "deepseek",
+            "qwen", "phi", "gemma", "command-r", "vicuna", "orca",
+        )
+    ):
         return ModelConfig(provider=LLMProvider.OLLAMA, model_id=model_str)
     else:
         # Default to Anthropic
@@ -449,5 +483,5 @@ async def run_agent(
         return await func(**input_data, parent_hash=parent_hash)
     else:
         # Wrap sync function
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         return await loop.run_in_executor(None, lambda: func(**input_data))

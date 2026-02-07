@@ -19,7 +19,9 @@
   <a href="#installation">Installation</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#agents">20 Agents</a> •
-  <a href="#tools">107 Tools</a> •
+  <a href="#tools">99 Tools</a> •
+  <a href="#reasoning-engines">10 Reasoning Engines</a> •
+  <a href="#memory-system">Memory</a> •
   <a href="#architecture">Architecture</a>
 </p>
 
@@ -43,7 +45,7 @@
 │   ║   └───────┘    └───────┘    └───────┘    └────────────┘          ║    │
 │   ║                                                                   ║    │
 │   ╠═══════════════════════════════════════════════════════════════════╣    │
-│   ║   20 Specialized Agents  │  107 Pure Python Tools                 ║    │
+│   ║   20+ Agents │ 99 Tools │ 10 Reasoning Engines │ 3-Tier Memory  ║    │
 │   ╚═══════════════════════════════════════════════════════════════════╝    │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -54,37 +56,22 @@ Open Agent Flow is a Python framework for building autonomous AI agents with:
 - **Graph-native reasoning traces** - Every thought, tool call, and decision recorded
 - **Multi-LLM support** - Anthropic Claude, OpenAI GPT, AWS Bedrock, Ollama
 - **20 specialized agents** - Code review, security, testing, documentation, and more
-- **107 pure Python tools** - Text, code, data, web, math, crypto, media, AI utilities
+- **99 pure Python tools** - Text, code, data, web, math, media, datetime, AI, system utilities
+- **10 reasoning engines** - Dialectical, Dream-Wake, Meta-Cognitive, Adversarial, Evolutionary, Fractal, Resonance, Temporal, Annealing, Socratic
+- **3-tier memory system** - Fleeting, short-term, long-term with auto-forget, auto-summarize, auto-prune
+- **JIT Meta-Agent** - Agent that creates new tools at runtime with sandboxed execution
+- **Graph tracing** - Full DAG of every agent run (SQLite default, Gremlin for production)
+- **Ollama support** - Local-first AI with zero API keys needed
 - **Zero API key mode** - Works with Claude Code CLI (no key needed!)
 
 ## Features
 
-<table>
-<tr>
-<td width="50%">
-
-### Decorators
 ```python
-@agent    # Autonomous AI agent
-@tool     # Pure Python function
-@chain    # Sequential pipeline
-@swarm    # Parallel + consensus
+@agent    # Autonomous AI agent with ReAct loop
+@tool     # Pure Python function, auto-schema from type hints
+@chain    # Sequential pipeline of agents
+@swarm    # Parallel execution + consensus synthesis
 ```
-
-</td>
-<td width="50%">
-
-### LLM Providers
-```python
-claude-sonnet-4-20250514  # Anthropic
-gpt-4o                    # OpenAI
-claude-code               # CLI (free!)
-mock                      # Testing
-```
-
-</td>
-</tr>
-</table>
 
 ## Installation
 
@@ -256,7 +243,7 @@ async def full_review(code: str) -> dict:
 
 ## Tools
 
-Open Agent Flow includes **107 pure Python tools** across 10 categories:
+Open Agent Flow includes **99 pure Python tools** across 9 categories:
 
 ### Text Processing (15 tools)
 ```python
@@ -312,16 +299,6 @@ math.statistics_summary([1,2,3]) # mean, median, mode, std_dev
 math.convert_units(100, "km", "miles")  # 62.137...
 ```
 
-### Cryptography (8 tools)
-```python
-from openagentflow.tools import crypto
-
-crypto.hash_sha256("hello")        # SHA-256 hash
-crypto.generate_password(16)       # Secure random password
-crypto.caesar_cipher("hello", 3)   # 'khoor'
-crypto.generate_uuid()             # Random UUID
-```
-
 ### Media (8 tools)
 ```python
 from openagentflow.tools import media
@@ -362,6 +339,78 @@ system.glob_to_regex("*.py")          # Regex pattern
 system.parse_env_file(env_content)    # Dict of env vars
 ```
 
+## Reasoning Engines
+
+OpenAgentFlow includes **10 advanced reasoning strategies** that go beyond basic ReAct/CoT/ToT:
+
+```python
+from openagentflow.reasoning import (
+    DialecticalSpiral,    # Thesis-Antithesis-Synthesis spiral
+    DreamWakeCycle,       # Divergent-Convergent oscillation
+    MetaCognitiveLoop,    # Reasoning about reasoning
+    AdversarialSelfPlay,  # Red/Blue/Judge tribunal
+    EvolutionaryThought,  # Darwinian selection on ideas
+    FractalRecursion,     # Self-similar reasoning at every scale
+    ResonanceNetwork,     # Thought amplification network
+    TemporalRecursion,    # Future-self pre-mortem
+    SimulatedAnnealing,   # Temperature-based exploration
+    SocraticInterrogation # Progressive assumption testing
+)
+
+# Example: Adversarial reasoning for robust solutions
+engine = AdversarialSelfPlay(max_rounds=5)
+trace = await engine.reason("Design a secure auth system", provider)
+print(trace.final_output)  # Solution hardened through Red/Blue debate
+print(f"Resolved in {len(trace.steps)} steps")
+```
+
+### Decision Guide
+
+| Need | Use |
+|------|-----|
+| Deep analysis | `DialecticalSpiral` - contradictions drive insight |
+| Creative solutions | `DreamWakeCycle` - unconstrained ideation + validation |
+| Complex planning | `MetaCognitiveLoop` - adapts strategy when stuck |
+| Robust outputs | `AdversarialSelfPlay` - only accepts what survives attack |
+| Optimization | `EvolutionaryThought` - recombines partial solutions |
+| Hierarchical tasks | `FractalRecursion` - strategic failures trigger strategic fixes |
+| Coherent synthesis | `ResonanceNetwork` - consistent ideas amplify |
+| Risk planning | `TemporalRecursion` - pre-mortem from future perspective |
+| Escaping local optima | `SimulatedAnnealing` - controlled randomness |
+| Critical thinking | `SocraticInterrogation` - expose hidden assumptions |
+
+See [reasoning/README.md](src/openagentflow/reasoning/README.md) for full documentation.
+
+## Memory System
+
+Three-tier memory hierarchy with automatic lifecycle management:
+
+```
+┌──────────────────────────────────────────────────────────┐
+│                      Memory Manager                        │
+├──────────────┬──────────────────┬────────────────────────┤
+│   FLEETING   │    SHORT-TERM    │       LONG-TERM         │
+│  Per-turn    │    Session       │    Persistent           │
+│  scratchpad  │  auto-summarize  │   graph-backed          │
+│  auto-clear  │  auto-prune      │   auto-decay            │
+├──────────────┴──────────────────┴────────────────────────┤
+│           Garbage Collector (auto-management)              │
+│  forget · summarize · prune · deduplicate · improve        │
+└──────────────────────────────────────────────────────────┘
+```
+
+```python
+from openagentflow.memory import MemoryManager, MemoryTier
+
+memory = MemoryManager(graph_backend=backend)
+await memory.remember("pattern", "always check imports first", importance=0.9)
+results = await memory.recall("import issues")
+context = await memory.get_context_window(max_tokens=4000)
+await memory.run_gc()  # Auto-forget, prune, deduplicate
+```
+
+See [memory/README.md](src/openagentflow/memory/README.md) for full documentation.
+
 ## Architecture
 
 ```
@@ -375,24 +424,30 @@ system.parse_env_file(env_content)    # Dict of env vars
 │   └──────────────────────────────────────────────────────────┘    │
 │                              │                                     │
 │   ┌──────────────────────────▼───────────────────────────────┐    │
+│   │              Reasoning Engines (10)                       │    │
+│   │  Dialectical │ DreamWake │ MetaCognitive │ Adversarial   │    │
+│   │  Evolutionary │ Fractal │ Resonance │ Temporal │ ...     │    │
+│   └──────────────────────────────────────────────────────────┘    │
+│                              │                                     │
+│   ┌──────────────────────────▼───────────────────────────────┐    │
 │   │                   LLM Providers                           │    │
-│   │  Anthropic │ OpenAI │ Bedrock │ Ollama │ Claude Code CLI │    │
+│   │  Anthropic │ OpenAI │ Ollama │ Bedrock │ Claude Code CLI │    │
 │   └──────────────────────────────────────────────────────────┘    │
 │                              │                                     │
 │   ┌──────────────────────────▼───────────────────────────────┐    │
-│   │               Specialized Agents (20)                     │    │
+│   │               Specialized Agents (20+)                    │    │
 │   │  Code Quality │ Security │ Testing │ Documentation       │    │
-│   │  Refactoring  │ Creative │ Research                       │    │
+│   │  Refactoring  │ Creative │ Research │ Meta (JIT)          │    │
 │   └──────────────────────────────────────────────────────────┘    │
 │                              │                                     │
 │   ┌──────────────────────────▼───────────────────────────────┐    │
-│   │                Pure Python Tools (107)                    │    │
-│   │  Text │ Code │ Data │ Web │ Math │ Crypto │ Media │ AI   │    │
+│   │                Pure Python Tools (99+)                    │    │
+│   │  Text │ Code │ Data │ Web │ Math │ Media │ DateTime │ AI │    │
 │   └──────────────────────────────────────────────────────────┘    │
 │                              │                                     │
 │   ┌──────────────────────────▼───────────────────────────────┐    │
 │   │                   Runtime Layer                           │    │
-│   │     Executor │ Memory │ Traces │ Guardrails              │    │
+│   │  Executor │ Memory (3-tier) │ Graph Traces │ Guardrails  │    │
 │   └──────────────────────────────────────────────────────────┘    │
 │                                                                    │
 └────────────────────────────────────────────────────────────────────┘

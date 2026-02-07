@@ -1,0 +1,94 @@
+version: "3.9"
+
+# OpenAgentFlow distributed compute topology
+#
+# Provides a multi-node Ollama setup with GPU support, a graph database for
+# reasoning traces, and the OpenAgentFlow API service.
+#
+# Usage:
+#   docker compose up -d          # Start all services
+#   docker compose up --scale ollama2=2  # Add more Ollama replicas
+#   docker compose logs -f api    # Follow API logs
+#
+# Environment variables:
+#   OLLAMA_HOSTS  - Auto-populated with Ollama service addresses
+#   OAF_API_PORT  - Host port for the API (default: 8000)
+
+services:
+
+  # --------------------------------------------------------------------------
+  # OpenAgentFlow API service
+  # --------------------------------------------------------------------------
+  api:
+    build: .
+    ports:
+      - "${OAF_API_PORT:-8000}:8000"
+    environment:
+      - OLLAMA_HOSTS=ollama1:11434,ollama2:11434
+      - OAF_GRAPH_ENDPOINT=ws://tinkergraph:8182/gremlin
+    depends_on:
+      - ollama1
+      - ollama2
+      - tinkergraph
+    volumes:
+      - ./src:/app/src:ro
+    restart: unless-stopped
+
+  # --------------------------------------------------------------------------
+  # Ollama inference nodes (GPU-accelerated)
+  # --------------------------------------------------------------------------
+  ollama1:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama1-models:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+
+  ollama2:
+    image: ollama/ollama
+    ports:
+      - "11435:11434"
+    volumes:
+      - ollama2-models:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+
+  # --------------------------------------------------------------------------
+  # Graph database for reasoning traces and agent lineage
+  # --------------------------------------------------------------------------
+  tinkergraph:
+    image: tinkerpop/gremlin-server:3.7.0
+    ports:
+      - "8182:8182"
+    volumes:
+      - ./gremlin-server.yaml:/opt/gremlin-server/conf/gremlin-server.yaml
+    restart: unless-stopped
+
+  # --------------------------------------------------------------------------
+  # Frontend (web UI)
+  # --------------------------------------------------------------------------
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  ollama1-models:
+  ollama2-models:

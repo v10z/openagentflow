@@ -2,12 +2,13 @@
 
 import ast
 import re
-from typing import Any
 
-from openagentflow import agent
+from openagentflow import agent, tool
 
 
 # Helper Tools
+
+@tool
 def generate_docstring(code: str) -> str:
     """
     Generate docstring for function/class.
@@ -71,6 +72,7 @@ def generate_docstring(code: str) -> str:
         return f'"""Error generating docstring: {str(e)}"""'
 
 
+@tool
 def infer_types(code: str) -> dict:
     """
     Infer types from code analysis.
@@ -142,6 +144,7 @@ def infer_types(code: str) -> dict:
     return type_info
 
 
+@tool
 def extract_examples(code: str) -> list[str]:
     """
     Extract usage examples from code.
@@ -189,6 +192,7 @@ def extract_examples(code: str) -> list[str]:
     return examples if examples else ["No examples found in code"]
 
 
+@tool
 def generate_readme(code: str) -> str:
     """
     Generate README content from code.
@@ -267,6 +271,7 @@ def generate_readme(code: str) -> str:
     return readme
 
 
+@tool
 def create_changelog(changes: list[str]) -> str:
     """
     Create changelog entry from list of changes.
@@ -345,6 +350,7 @@ def create_changelog(changes: list[str]) -> str:
     return changelog
 
 
+@tool
 def document_api(code: str) -> str:
     """
     Document API endpoints from code.
@@ -431,7 +437,7 @@ def document_api(code: str) -> str:
 @agent(
     name="docstring_generator",
     model="claude-sonnet-4-20250514",
-    system="""You are an expert documentation generator specializing in creating high-quality docstrings.
+    system_prompt="""You are an expert documentation generator specializing in creating high-quality docstrings.
 
 Your role is to:
 1. Analyze code structure and functionality
@@ -465,13 +471,13 @@ async def docstring_generator(code: str) -> str:
     Returns:
         Improved code with generated docstrings
     """
-    return code
+    pass  # ReAct loop handles execution via LLM
 
 
 @agent(
     name="readme_writer",
     model="claude-sonnet-4-20250514",
-    system="""You are an expert technical writer specializing in project documentation.
+    system_prompt="""You are an expert technical writer specializing in project documentation.
 
 Your role is to:
 1. Create comprehensive README files
@@ -506,4 +512,4 @@ async def readme_writer(code: str) -> str:
     Returns:
         Generated documentation content
     """
-    return code
+    pass  # ReAct loop handles execution via LLM

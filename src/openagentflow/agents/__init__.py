@@ -11,6 +11,7 @@ Agent Categories:
 - Refactoring (2): code_modernizer, architecture_advisor
 - Creative (4): code_explainer, idea_generator, code_translator, name_suggester
 - Research (3): dependency_researcher, performance_profiler, best_practices_advisor
+- Meta (1): tool_maker (JIT tool creation meta-agent)
 
 Usage:
     from openagentflow.agents import code_quality, security
@@ -34,6 +35,7 @@ from openagentflow.agents import testing
 from openagentflow.agents import refactoring
 from openagentflow.agents import creative
 from openagentflow.agents import research
+from openagentflow.agents import meta
 
 __all__ = [
     "code_quality",
@@ -43,4 +45,5 @@ __all__ = [
     "refactoring",
     "creative",
     "research",
+    "meta",
 ]

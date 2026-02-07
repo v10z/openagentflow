@@ -9,7 +9,6 @@ Categories:
 - data: Data transformation (JSON, CSV, XML, YAML conversion)
 - web: Web/HTTP utilities (URL parsing, HTML extraction)
 - math_: Mathematical operations (primes, statistics, units)
-- crypto: Cryptography (hashing, encoding, passwords)
 - media: Media processing (colors, images, QR codes)
 - datetime_: Date/time utilities (parsing, formatting, arithmetic)
 - ai: AI/ML helpers (tokens, chunks, prompts, costs)
@@ -33,7 +32,6 @@ from openagentflow.tools import code
 from openagentflow.tools import data
 from openagentflow.tools import web
 from openagentflow.tools import math_ as math
-from openagentflow.tools import crypto
 from openagentflow.tools import media
 from openagentflow.tools import datetime_ as datetime
 from openagentflow.tools import ai
@@ -45,7 +43,6 @@ __all__ = [
     "data",
     "web",
     "math",
-    "crypto",
     "media",
     "datetime",
     "ai",

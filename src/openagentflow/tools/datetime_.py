@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from typing import Dict
 from dateutil import parser as date_parser
 
-from openagentflow.core.decorators import tool
+from openagentflow import tool
 
 
 @tool

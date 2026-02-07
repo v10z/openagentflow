@@ -6,7 +6,7 @@ including string transformations, pattern extraction, language detection, and st
 
 import re
 from collections import Counter
-from typing import Dict, List
+from typing import Any, Dict, List
 from openagentflow import tool
 
 
@@ -387,7 +387,7 @@ def pig_latin(text: str) -> str:
 
 
 @tool
-def text_statistics(text: str) -> Dict[str, any]:
+def text_statistics(text: str) -> Dict[str, Any]:
     """Generate comprehensive statistics about the text.
 
     Args:

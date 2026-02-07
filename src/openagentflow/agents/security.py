@@ -1,12 +1,12 @@
 """Security agents for vulnerability scanning and secrets detection."""
 
 import re
-from typing import Any
-from openagentflow import agent
+from openagentflow import agent, tool
 
 
 # Security Tools
 
+@tool
 def detect_sql_injection(code: str) -> list[dict]:
     """Find SQL injection vulnerabilities in code.
 
@@ -44,6 +44,7 @@ def detect_sql_injection(code: str) -> list[dict]:
     return vulnerabilities
 
 
+@tool
 def find_xss_vectors(code: str) -> list[dict]:
     """Find Cross-Site Scripting (XSS) vulnerabilities.
 
@@ -83,6 +84,7 @@ def find_xss_vectors(code: str) -> list[dict]:
     return vulnerabilities
 
 
+@tool
 def check_command_injection(code: str) -> list[dict]:
     """Find command injection vulnerabilities.
 
@@ -122,6 +124,7 @@ def check_command_injection(code: str) -> list[dict]:
     return vulnerabilities
 
 
+@tool
 def find_hardcoded_secrets(code: str) -> list[dict]:
     """Find hardcoded secrets and passwords in code.
 
@@ -160,6 +163,7 @@ def find_hardcoded_secrets(code: str) -> list[dict]:
     return secrets
 
 
+@tool
 def detect_api_keys(code: str) -> list[dict]:
     """Detect API keys and tokens in code.
 
@@ -199,6 +203,7 @@ def detect_api_keys(code: str) -> list[dict]:
     return api_keys
 
 
+@tool
 def scan_env_leaks(code: str) -> list[dict]:
     """Find environment variable leaks and misconfigurations.
 

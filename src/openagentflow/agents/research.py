@@ -1,9 +1,11 @@
 """Research agents for code analysis and optimization."""
 
-from openagentflow import agent
+from openagentflow import agent, tool
 
 
 # Helper Tools for Dependency Research
+
+@tool
 def find_alternatives(package: str) -> list[dict]:
     """Find alternative packages to the given package.
 
@@ -37,6 +39,7 @@ def find_alternatives(package: str) -> list[dict]:
     ])
 
 
+@tool
 def compare_libraries(lib1: str, lib2: str) -> dict:
     """Compare two libraries across various metrics.
 
@@ -68,6 +71,7 @@ def compare_libraries(lib1: str, lib2: str) -> dict:
     }
 
 
+@tool
 def check_maintenance(package: str) -> dict:
     """Check if a package is actively maintained.
 
@@ -95,6 +99,8 @@ def check_maintenance(package: str) -> dict:
 
 
 # Helper Tools for Performance Profiling
+
+@tool
 def find_bottlenecks(code: str) -> list[dict]:
     """Find performance bottlenecks in code.
 
@@ -147,6 +153,7 @@ def find_bottlenecks(code: str) -> list[dict]:
     return bottlenecks if bottlenecks else [{"type": "none", "description": "No obvious bottlenecks detected"}]
 
 
+@tool
 def suggest_optimizations(code: str) -> list[str]:
     """Suggest performance optimizations for code.
 
@@ -182,6 +189,7 @@ def suggest_optimizations(code: str) -> list[str]:
     return suggestions
 
 
+@tool
 def estimate_complexity(code: str) -> dict:
     """Estimate Big-O complexity of code.
 
@@ -224,6 +232,8 @@ def estimate_complexity(code: str) -> dict:
 
 
 # Helper Tools for Best Practices Analysis
+
+@tool
 def check_practices(code: str) -> list[dict]:
     """Check code against best practices.
 
@@ -294,6 +304,7 @@ def check_practices(code: str) -> list[dict]:
     return issues if issues else [{"type": "none", "description": "No best practice violations detected"}]
 
 
+@tool
 def suggest_improvements(code: str) -> list[str]:
     """Suggest code quality improvements.
 
@@ -332,6 +343,7 @@ def suggest_improvements(code: str) -> list[str]:
     return improvements
 
 
+@tool
 def rate_code_quality(code: str) -> dict:
     """Rate overall code quality on a scale of 1-10.
 
@@ -400,7 +412,22 @@ def rate_code_quality(code: str) -> dict:
 
 @agent(
     model="claude-sonnet-4-20250514",
-    tools=[find_alternatives, compare_libraries, check_maintenance]
+    tools=[find_alternatives, compare_libraries, check_maintenance],
+    system_prompt="""You are a dependency research specialist who analyzes project dependencies.
+
+Your responsibilities:
+1. Identify dependencies used in the code
+2. Find alternative packages with better features or maintenance
+3. Compare libraries across performance, ease of use, and community metrics
+4. Check if dependencies are actively maintained
+
+When analyzing dependencies:
+- Use find_alternatives to discover replacement options
+- Use compare_libraries to evaluate options side-by-side
+- Use check_maintenance to verify ongoing support
+- Recommend migration paths for deprecated packages
+
+Provide specific, actionable recommendations with clear reasoning.""",
 )
 async def dependency_researcher(code: str) -> str:
     """Analyze code dependencies and suggest alternatives or improvements.
@@ -414,28 +441,27 @@ async def dependency_researcher(code: str) -> str:
     Returns:
         Analysis report with dependency recommendations
     """
-    return f"""Analyze the following code for dependencies and provide recommendations:
-
-{code}
-
-Please:
-1. Identify all dependencies and imports used in the code
-2. Check the maintenance status of each dependency
-3. Find alternative packages that might be better suited
-4. Compare the current dependencies with alternatives
-5. Provide actionable recommendations for dependency improvements
-
-Focus on factors like:
-- Maintenance and update frequency
-- Community support and popularity
-- Performance characteristics
-- Security considerations
-- Compatibility and ease of migration"""
+    pass  # ReAct loop handles execution via LLM
 
 
 @agent(
     model="claude-sonnet-4-20250514",
-    tools=[find_bottlenecks, suggest_optimizations, estimate_complexity]
+    tools=[find_bottlenecks, suggest_optimizations, estimate_complexity],
+    system_prompt="""You are a performance profiling expert who identifies bottlenecks and suggests optimizations.
+
+Your responsibilities:
+1. Find performance bottlenecks in code
+2. Estimate computational complexity (Big-O)
+3. Suggest specific optimizations for better performance
+4. Identify inefficient patterns and algorithms
+
+When analyzing performance:
+- Use find_bottlenecks to locate slow code paths
+- Use estimate_complexity to assess algorithmic efficiency
+- Use suggest_optimizations to provide improvement strategies
+- Focus on the highest-impact optimizations first
+
+Provide measurable improvement estimates where possible.""",
 )
 async def performance_profiler(code: str) -> str:
     """Analyze code performance and suggest optimizations.
@@ -449,28 +475,27 @@ async def performance_profiler(code: str) -> str:
     Returns:
         Performance analysis report with optimization suggestions
     """
-    return f"""Analyze the performance characteristics of the following code:
-
-{code}
-
-Please:
-1. Identify all performance bottlenecks in the code
-2. Estimate the time and space complexity
-3. Suggest specific optimizations to improve performance
-4. Prioritize optimizations by impact and ease of implementation
-5. Provide refactored code examples where beneficial
-
-Consider:
-- Algorithmic complexity (Big-O notation)
-- Memory usage and allocations
-- I/O operations and blocking calls
-- Loop optimizations and vectorization opportunities
-- Caching and memoization potential"""
+    pass  # ReAct loop handles execution via LLM
 
 
 @agent(
     model="claude-sonnet-4-20250514",
-    tools=[check_practices, suggest_improvements, rate_code_quality]
+    tools=[check_practices, suggest_improvements, rate_code_quality],
+    system_prompt="""You are a best practices advisor who reviews code quality and recommends improvements.
+
+Your responsibilities:
+1. Check code against Python best practices and PEP guidelines
+2. Suggest specific improvements for code quality
+3. Rate overall code quality with detailed feedback
+4. Prioritize recommendations by impact
+
+When reviewing code:
+- Use check_practices to audit against coding standards
+- Use suggest_improvements to generate actionable recommendations
+- Use rate_code_quality to provide an overall assessment
+- Focus on maintainability, readability, and correctness
+
+Be constructive and specific. Every recommendation should include a clear reason.""",
 )
 async def best_practices_advisor(code: str) -> str:
     """Review code against industry best practices and provide improvement suggestions.
@@ -484,22 +509,4 @@ async def best_practices_advisor(code: str) -> str:
     Returns:
         Code quality report with improvement recommendations
     """
-    return f"""Review the following code for adherence to best practices:
-
-{code}
-
-Please:
-1. Check the code against Python best practices (PEP 8, PEP 257, etc.)
-2. Rate the overall code quality on a scale of 1-10
-3. Identify specific violations or areas for improvement
-4. Suggest concrete improvements with examples
-5. Prioritize recommendations by importance
-
-Focus on:
-- Code style and formatting (PEP 8)
-- Documentation and docstrings (PEP 257)
-- Error handling and edge cases
-- Code organization and modularity
-- Naming conventions and readability
-- Security considerations
-- Testing and maintainability"""
+    pass  # ReAct loop handles execution via LLM

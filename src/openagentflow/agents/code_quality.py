@@ -81,7 +81,7 @@ async def style_enforcer(code: str) -> str:
     Returns:
         Detailed style analysis report with violations and recommendations
     """
-    return f"Analyzing code for PEP 8 style violations...\n\nCode:\n{code}"
+    pass  # ReAct loop handles execution via LLM
 
 
 @agent(
@@ -129,7 +129,7 @@ async def complexity_analyzer(code: str) -> str:
     Returns:
         Detailed complexity analysis with refactoring recommendations
     """
-    return f"Analyzing code complexity...\n\nCode:\n{code}"
+    pass  # ReAct loop handles execution via LLM
 
 
 @agent(
@@ -179,7 +179,7 @@ async def dead_code_hunter(code: str) -> str:
     Returns:
         Report of dead code with specific removal recommendations
     """
-    return f"Hunting for dead code...\n\nCode:\n{code}"
+    pass  # ReAct loop handles execution via LLM
 
 
 @agent(
@@ -236,7 +236,7 @@ async def pattern_detector(code: str) -> str:
     Returns:
         Report of detected anti-patterns with refactoring suggestions
     """
-    return f"Detecting anti-patterns and code smells...\n\nCode:\n{code}"
+    pass  # ReAct loop handles execution via LLM
 
 
 @agent(
@@ -292,4 +292,4 @@ async def consistency_checker(code: str) -> str:
     Returns:
         Consistency analysis report with improvement recommendations
     """
-    return f"Checking code consistency...\n\nCode:\n{code}"
+    pass  # ReAct loop handles execution via LLM

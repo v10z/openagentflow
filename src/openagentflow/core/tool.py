@@ -227,7 +227,12 @@ def tool(
 
         @functools.wraps(fn)
         def sync_wrapper(*args: Any, **kwargs: Any) -> Any:
-            """Sync wrapper that returns raw result (for direct use)."""
+            """Sync wrapper that returns raw result (for direct use).
+
+            When called directly (not through the agent executor),
+            returns the raw function result for convenience.
+            Use _async_call() for the full ToolResult wrapper.
+            """
             return fn(*args, **kwargs)
 
         # Attach spec to wrapper
