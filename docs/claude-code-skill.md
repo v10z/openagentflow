@@ -23,7 +23,7 @@ If you have the `.claude/commands/openagentflow.md` file in your project root, C
 Once installed, use the `/openagentflow` slash command in Claude Code to activate the skill. Claude will then know how to:
 
 - Import and use all openagentflow decorators (`@agent`, `@tool`, `@chain`, `@swarm`)
-- Run any of the 10 reasoning engines
+- Run any of the 30 reasoning engines
 - Use the 3-tier memory system
 - Create graph traces with SQLite backend
 - Dynamically create tools with the JIT Meta-Agent

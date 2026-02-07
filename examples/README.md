@@ -29,7 +29,7 @@ ollama pull llama3
 | [`02_agent.py`](02_agent.py) | Building an autonomous agent with `@agent` |
 | [`03_chain.py`](03_chain.py) | Sequential pipelines with `@chain` |
 | [`04_swarm.py`](04_swarm.py) | Parallel execution and consensus with `@swarm` |
-| [`05_reasoning.py`](05_reasoning.py) | Using all 10 reasoning engines |
+| [`05_reasoning.py`](05_reasoning.py) | Using all 30 reasoning engines |
 | [`06_memory.py`](06_memory.py) | 3-tier memory system with GC |
 | [`07_graph.py`](07_graph.py) | Execution tracing with SQLite graph |
 | [`08_meta_agent.py`](08_meta_agent.py) | JIT tool creation with the Meta-Agent |

@@ -48,6 +48,8 @@ graph LR
 
 ## Available Engines
 
+### Core Cognitive Engines
+
 | Engine                  | Pattern                              | Best For                                  |
 |-------------------------|--------------------------------------|-------------------------------------------|
 | `DialecticalSpiral`     | Thesis -> Antithesis -> Synthesis    | Deep analysis, nuanced understanding      |
@@ -60,6 +62,36 @@ graph LR
 | `TemporalRecursion`     | Future-self pre-mortem               | Risk analysis, planning                   |
 | `SimulatedAnnealing`    | Temperature-based exploration        | Escaping local optima, search             |
 | `SocraticInterrogation` | Progressive questioning              | Assumption testing, critical thinking     |
+
+### Neuroscience-Inspired Engines
+
+| Engine                  | Pattern                              | Best For                                  |
+|-------------------------|--------------------------------------|-------------------------------------------|
+| `PredictiveCoding`      | Prediction-error minimisation        | Iterative refinement, hypothesis testing  |
+| `GlobalWorkspace`       | Parallel specialists competing       | Multi-expert analysis, consensus          |
+| `HebbianAssociation`    | Associative concept networks         | Knowledge discovery, pattern recognition  |
+| `DefaultModeNetwork`    | Focused work + creative wandering    | Innovation, complex problem solving       |
+| `HippocampalReplay`     | Forward/backward replay              | Counterfactual reasoning, what-if analysis|
+| `AttractorNetwork`      | Hopfield-style convergence           | Robust answer convergence, stability      |
+| `NeuralOscillation`     | Multi-frequency processing           | Multi-scale analysis, temporal reasoning  |
+| `LateralInhibition`     | Winner-take-all competition          | Hypothesis elimination, decision making   |
+| `BasalGangliaGating`    | Go/No-Go/Hyperdirect pathways        | Action selection, decision gating         |
+| `NeuromodulatorySweep`  | 8 neurochemical regimes              | Comprehensive problem analysis            |
+
+### Physics-Inspired Engines
+
+| Engine                  | Pattern                              | Best For                                  |
+|-------------------------|--------------------------------------|-------------------------------------------|
+| `SuperpositionCollapse` | Multi-basis measurement              | Framing-robust solutions                  |
+| `WaveInterference`      | Constructive/destructive interference| Argument evaluation, conflict resolution  |
+| `PhaseTransition`       | Disorder-to-order crystallisation    | Complex system design, emergence          |
+| `EntropicFunnel`        | Information-theoretic narrowing      | Hypothesis space reduction                |
+| `RenormalizationGroup`  | Bottom-up coarse-graining            | Abstraction, essential feature extraction |
+| `GaugeInvariance`       | Perspective-invariant truths         | Architectural decisions, universal truths |
+| `PerturbativeExpansion` | Core + ordered corrections           | Incremental refinement, approximations    |
+| `LeastActionPath`       | Variational path optimisation        | Optimal reasoning paths, efficiency       |
+| `BarrierPenetration`    | Tunnelling through impossibilities   | Creative breakthroughs, lateral thinking  |
+| `EntangledThreads`      | Coupled sub-problem co-evolution     | Multi-constraint optimization             |
 
 ---
 
@@ -231,6 +263,34 @@ trace = await engine.reason(
 print(trace.final_output)
 ```
 
+### Neuroscience-Inspired Engines
+
+```python
+from openagentflow.reasoning import PredictiveCoding, GlobalWorkspace
+
+# Iterative refinement through prediction errors
+engine = PredictiveCoding(hierarchy_depth=4, precision_threshold=0.85)
+trace = await engine.reason("Optimize our CI/CD pipeline", llm_provider)
+
+# Parallel specialists competing for attention
+engine = GlobalWorkspace(num_specialists=6, broadcast_rounds=3)
+trace = await engine.reason("Diagnose this production outage", llm_provider)
+```
+
+### Physics-Inspired Engines
+
+```python
+from openagentflow.reasoning import EntropicFunnel, GaugeInvariance
+
+# Narrowing hypotheses through information gain
+engine = EntropicFunnel(initial_hypotheses=8, target_entropy=0.5)
+trace = await engine.reason("What's causing the memory leak?", llm_provider)
+
+# Finding perspective-invariant truths
+engine = GaugeInvariance(num_perspectives=5)
+trace = await engine.reason("Evaluate this architectural decision", llm_provider)
+```
+
 ---
 
 ## Composition
@@ -326,9 +386,49 @@ Annealing  Thought
                                    Recursion       Network
 
            Not sure? --> MetaCognitiveLoop (auto-selects)
+
+           Need brain-inspired approach?
+           /              |              \
+      Prediction-    Multi-expert    Associative
+      based          analysis        reasoning
+          |              |               |
+    PredictiveCoding GlobalWorkspace HebbianAssociation
+
+         Creative          Replay/         Convergence
+         wandering     counterfactual     dynamics
+             |                |                |
+      DefaultModeNetwork HippocampalReplay AttractorNetwork
+
+         Multi-scale      Competitive      Action
+         processing      elimination       gating
+             |               |               |
+      NeuralOscillation LateralInhibition BasalGangliaGating
+
+           Comprehensive analysis: NeuromodulatorySweep
+
+           Need mathematical rigor?
+           /              |              \
+      Framing-       Interference    Emergence
+      robust         patterns        dynamics
+          |              |               |
+   SuperpositionCollapse WaveInterference PhaseTransition
+
+      Hypothesis      Abstraction    Perspective
+      narrowing       extraction     invariance
+          |              |               |
+    EntropicFunnel RenormalizationGroup GaugeInvariance
+
+      Incremental     Optimal         Creative
+      refinement      paths          breakthroughs
+          |              |               |
+   PerturbativeExpansion LeastActionPath BarrierPenetration
+
+           Multi-constraint: EntangledThreads
 ```
 
 ### Performance Characteristics
+
+#### Core Cognitive Engines
 
 | Engine                  | LLM Calls (typical) | Latency    | Quality | Best Problem Size |
 |-------------------------|----------------------|------------|---------|-------------------|
@@ -342,6 +442,36 @@ Annealing  Thought
 | `TemporalRecursion`     | 3 - 9                | Low-Medium | Medium  | Risk/planning     |
 | `SimulatedAnnealing`    | 10 - 40              | High       | High    | Search problems   |
 | `SocraticInterrogation` | 4 - 14               | Medium     | Medium  | Clarification     |
+
+#### Neuroscience-Inspired Engines
+
+| Engine                  | LLM Calls (typical) | Latency       | Quality     | Best Problem Size |
+|-------------------------|----------------------|---------------|-------------|-------------------|
+| `PredictiveCoding`      | 8 - 16               | Medium        | High        | Iterative tasks   |
+| `GlobalWorkspace`       | 10 - 20              | Medium-High   | High        | Multi-faceted     |
+| `HebbianAssociation`    | 8 - 14               | Medium        | Medium-High | Knowledge tasks   |
+| `DefaultModeNetwork`    | 8 - 14               | Medium        | High        | Creative tasks    |
+| `HippocampalReplay`     | 10 - 18              | Medium-High   | High        | What-if analysis  |
+| `AttractorNetwork`      | 12 - 20              | High          | High        | Convergence tasks |
+| `NeuralOscillation`     | 8 - 14               | Medium        | Medium-High | Multi-scale       |
+| `LateralInhibition`     | 10 - 16              | Medium        | High        | Decision making   |
+| `BasalGangliaGating`    | 10 - 16              | Medium        | Medium-High | Action selection  |
+| `NeuromodulatorySweep`  | 8 - 12               | Low-Medium    | Medium      | Comprehensive     |
+
+#### Physics-Inspired Engines
+
+| Engine                  | LLM Calls (typical) | Latency       | Quality     | Best Problem Size |
+|-------------------------|----------------------|---------------|-------------|-------------------|
+| `SuperpositionCollapse` | 5 - 10               | Low-Medium    | Medium-High | Framing-sensitive |
+| `WaveInterference`      | 4 - 8                | Low           | Medium      | Argument eval     |
+| `PhaseTransition`       | 15 - 25              | High          | High        | System design     |
+| `EntropicFunnel`        | 6 - 12               | Medium        | High        | Hypothesis space  |
+| `RenormalizationGroup`  | 5 - 10               | Medium        | Medium-High | Abstraction       |
+| `GaugeInvariance`       | 7 - 14               | Medium        | High        | Arch decisions    |
+| `PerturbativeExpansion` | 5 - 10               | Medium        | Medium-High | Refinement        |
+| `LeastActionPath`       | 6 - 12               | Medium        | High        | Path optimization |
+| `BarrierPenetration`    | 6 - 12               | Medium        | Medium-High | Breakthroughs     |
+| `EntangledThreads`      | 8 - 16               | Medium-High   | High        | Multi-constraint  |
 
 ### Quality vs. Speed Tradeoff
 
@@ -717,6 +847,8 @@ LLM calls: `O(branching_factor ^ max_depth)` -- use with care
 openagentflow/reasoning/
     __init__.py              # Public API exports
     base.py                  # ReasoningEngine, ReasoningStep, ReasoningTrace
+
+    # Core Cognitive Engines (10)
     metacognitive.py         # MetaCognitiveLoop
     adversarial.py           # AdversarialSelfPlay
     dialectical.py           # DialecticalSpiral
@@ -727,6 +859,30 @@ openagentflow/reasoning/
     temporal.py              # TemporalRecursion
     annealing.py             # SimulatedAnnealing
     socratic.py              # SocraticInterrogation
+
+    # Neuroscience-Inspired Engines (10)
+    predictive_coding.py     # PredictiveCoding
+    global_workspace.py      # GlobalWorkspace
+    hebbian_association.py   # HebbianAssociation
+    default_mode_network.py  # DefaultModeNetwork
+    hippocampal_replay.py    # HippocampalReplay
+    attractor_network.py     # AttractorNetwork
+    neural_oscillation.py    # NeuralOscillation
+    lateral_inhibition.py    # LateralInhibition
+    basal_ganglia_gating.py  # BasalGangliaGating
+    neuromodulatory_sweep.py # NeuromodulatorySweep
+
+    # Physics-Inspired Engines (10)
+    superposition_collapse.py # SuperpositionCollapse
+    wave_interference.py     # WaveInterference
+    phase_transition.py      # PhaseTransition
+    entropic_funnel.py       # EntropicFunnel
+    renormalization_group.py # RenormalizationGroup
+    gauge_invariance.py      # GaugeInvariance
+    perturbative_expansion.py # PerturbativeExpansion
+    least_action_path.py     # LeastActionPath
+    barrier_penetration.py   # BarrierPenetration
+    entangled_threads.py     # EntangledThreads
 ```
 
 ---

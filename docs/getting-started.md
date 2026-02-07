@@ -235,8 +235,8 @@ Now that you have a working agent, explore the rest of the framework:
 - [Agents](agents.md) -- 20 specialized agents for common workflows.
 - [Tools](tools.md) -- 99 built-in tools covering file I/O, HTTP, parsing, and
   more.
-- [Reasoning Engines](reasoning.md) -- 10 advanced reasoning strategies
-  (chain-of-thought, tree-of-thought, self-consistency, and others).
+- [Reasoning Engines](reasoning.md) -- 30 reasoning engines across cognitive, neuroscience, and physics paradigms
+  (dialectical, adversarial, predictive coding, wave interference, and others).
 - [Memory System](memory.md) -- 3-tier memory hierarchy (working, episodic,
   semantic) for long-running agents.
 - [Graph Tracing](graph.md) -- Execution DAG tracing for debugging and

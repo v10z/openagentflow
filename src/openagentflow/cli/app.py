@@ -214,8 +214,20 @@ def serve(ctx: click.Context, port: int, host: str, reload: bool) -> None:
         console.print("[red]Error:[/red] uvicorn not installed. Run: pip install openagentflow[server]")
         return
 
-    # TODO: Import actual FastAPI app
-    console.print("[yellow]Server not yet implemented[/yellow]")
+    try:
+        from openagentflow.server.app import create_app
+    except ImportError:
+        console.print("[red]Error:[/red] Server module not found. Run: pip install openagentflow[server]")
+        return
+
+    app = create_app()
+
+    if not ctx.obj.get("quiet", False):
+        console.print(f"[green]Dashboard:[/green] http://{host}:{port}")
+        console.print(f"[green]API docs:[/green]  http://{host}:{port}/api/docs")
+        console.print("[dim]Press Ctrl+C to stop[/dim]")
+
+    uvicorn.run(app, host=host, port=port, reload=reload, log_level="info")
 
 
 @cli.command()

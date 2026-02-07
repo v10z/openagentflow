@@ -1,0 +1,312 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+    font-size: 13px;
+  }
+
+  body {
+    @apply bg-editor-bg text-editor-fg font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Scrollbar styling - VSCode like */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-sidebar-border rounded-sm;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-activitybar-fg;
+  }
+
+  ::-webkit-scrollbar-corner {
+    @apply bg-transparent;
+  }
+}
+
+@layer components {
+  /* Buttons */
+  .btn {
+    @apply px-3 py-1.5 text-sm rounded transition-colors duration-100 font-normal;
+  }
+
+  .btn-primary {
+    @apply bg-accent-blue hover:bg-statusbar-hover text-white;
+  }
+
+  .btn-secondary {
+    @apply bg-sidebar-active hover:bg-sidebar-hover text-sidebar-fg;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-sidebar-hover text-sidebar-fg;
+  }
+
+  /* Inputs */
+  .input {
+    @apply bg-input-bg border border-input-border rounded px-3 py-1.5 text-sm text-input-fg
+           placeholder-activitybar-fg focus:outline-none focus:border-input-focus;
+  }
+
+  .input-search {
+    @apply bg-input-bg border-0 rounded-none px-3 py-2 text-sm text-input-fg
+           placeholder-activitybar-fg focus:outline-none w-full;
+  }
+
+  /* Cards/Panels */
+  .panel {
+    @apply bg-sidebar-bg border border-sidebar-border;
+  }
+
+  .card {
+    @apply bg-sidebar-bg rounded border border-sidebar-border;
+  }
+
+  /* List items */
+  .list-item {
+    @apply px-3 py-1.5 cursor-pointer transition-colors duration-75;
+  }
+
+  .list-item:hover {
+    @apply bg-list-hover;
+  }
+
+  .list-item.active {
+    @apply bg-list-active text-white;
+  }
+
+  .list-item.focus {
+    @apply bg-list-focus;
+  }
+
+  /* Activity bar button */
+  .activity-btn {
+    @apply w-12 h-12 flex items-center justify-center text-activitybar-fg
+           hover:text-activitybar-active transition-colors relative;
+  }
+
+  .activity-btn.active {
+    @apply text-activitybar-active;
+  }
+
+  .activity-btn.active::before {
+    content: '';
+    @apply absolute left-0 top-0 bottom-0 w-0.5 bg-activitybar-active;
+  }
+
+  /* Tabs */
+  .tab {
+    @apply px-3 py-2 text-sm flex items-center gap-2 border-r border-sidebar-border
+           text-activitybar-fg hover:text-sidebar-fg cursor-pointer;
+  }
+
+  .tab.active {
+    @apply text-white bg-editor-bg;
+  }
+
+  .tab-close {
+    @apply w-4 h-4 rounded hover:bg-sidebar-hover flex items-center justify-center opacity-0 group-hover:opacity-100;
+  }
+
+  .tab.active .tab-close {
+    @apply opacity-100;
+  }
+
+  /* Breadcrumbs */
+  .breadcrumb {
+    @apply text-xs text-activitybar-fg flex items-center gap-1;
+  }
+
+  .breadcrumb-item {
+    @apply hover:text-sidebar-fg cursor-pointer;
+  }
+
+  .breadcrumb-separator {
+    @apply text-sidebar-border;
+  }
+
+  /* Badge */
+  .badge {
+    @apply text-2xs px-1.5 py-0.5 rounded-full font-medium;
+  }
+
+  .badge-blue {
+    @apply bg-accent-blue text-white;
+  }
+
+  .badge-green {
+    @apply bg-accent-green text-editor-bg;
+  }
+
+  .badge-red {
+    @apply bg-accent-red text-white;
+  }
+
+  .badge-yellow {
+    @apply bg-accent-yellow text-editor-bg;
+  }
+
+  /* Status indicators */
+  .status-dot {
+    @apply w-2 h-2 rounded-full;
+  }
+
+  .status-success {
+    @apply bg-accent-green;
+  }
+
+  .status-error {
+    @apply bg-accent-red;
+  }
+
+  .status-warning {
+    @apply bg-accent-yellow;
+  }
+
+  .status-running {
+    @apply bg-accent-blue animate-pulse;
+  }
+
+  .status-pending {
+    @apply bg-activitybar-fg;
+  }
+
+  /* Tree view */
+  .tree-item {
+    @apply flex items-center gap-1.5 px-2 py-0.5 cursor-pointer text-sm;
+  }
+
+  .tree-item:hover {
+    @apply bg-list-hover;
+  }
+
+  .tree-item.selected {
+    @apply bg-list-active text-white;
+  }
+
+  .tree-indent {
+    @apply w-4 flex-shrink-0;
+  }
+
+  .tree-icon {
+    @apply w-4 h-4 flex-shrink-0 text-activitybar-fg;
+  }
+
+  /* Tooltip */
+  .tooltip {
+    @apply absolute z-50 px-2 py-1 text-xs bg-sidebar-bg border border-sidebar-border
+           rounded shadow-lg text-sidebar-fg whitespace-nowrap;
+  }
+
+  /* Command palette */
+  .command-palette {
+    @apply fixed top-0 left-1/2 -translate-x-1/2 w-[600px] max-w-[90vw] mt-[10vh]
+           bg-sidebar-bg border border-sidebar-border rounded shadow-2xl z-50 overflow-hidden;
+  }
+
+  .command-input {
+    @apply w-full bg-transparent border-0 border-b border-sidebar-border px-4 py-3
+           text-sm text-sidebar-fg placeholder-activitybar-fg focus:outline-none;
+  }
+
+  .command-list {
+    @apply max-h-[50vh] overflow-y-auto py-1;
+  }
+
+  .command-item {
+    @apply px-4 py-2 flex items-center gap-3 cursor-pointer;
+  }
+
+  .command-item:hover,
+  .command-item.selected {
+    @apply bg-list-active;
+  }
+
+  .command-item-icon {
+    @apply w-4 h-4 text-activitybar-fg;
+  }
+
+  .command-item-label {
+    @apply text-sm text-sidebar-fg flex-1;
+  }
+
+  .command-item-shortcut {
+    @apply text-xs text-activitybar-fg font-mono;
+  }
+
+  /* Empty state */
+  .empty-state {
+    @apply flex flex-col items-center justify-center py-16 text-center;
+  }
+
+  .empty-state-icon {
+    @apply w-16 h-16 text-sidebar-border mb-4;
+  }
+
+  .empty-state-title {
+    @apply text-lg font-medium text-sidebar-fg mb-2;
+  }
+
+  .empty-state-description {
+    @apply text-sm text-activitybar-fg max-w-md;
+  }
+}
+
+/* React Flow custom styles - VSCode themed */
+.react-flow__node-component {
+  @apply bg-sidebar-bg border border-sidebar-border rounded p-2 min-w-[140px] text-sm;
+}
+
+.react-flow__node-component.success {
+  @apply border-accent-green;
+}
+
+.react-flow__node-component.failed {
+  @apply border-accent-red;
+}
+
+.react-flow__node-component.running {
+  @apply border-accent-blue;
+}
+
+.react-flow__node-component.pending {
+  @apply border-sidebar-border;
+}
+
+.react-flow__edge-path {
+  stroke: #3c3c3c;
+  stroke-width: 1.5;
+}
+
+.react-flow__background {
+  background-color: #1e1e1e;
+}
+
+.react-flow__controls {
+  @apply bg-sidebar-bg border border-sidebar-border rounded overflow-hidden;
+}
+
+.react-flow__controls-button {
+  @apply bg-sidebar-bg border-0 border-b border-sidebar-border text-sidebar-fg hover:bg-sidebar-hover;
+}
+
+.react-flow__controls-button:last-child {
+  @apply border-b-0;
+}
+
+.react-flow__minimap {
+  @apply bg-sidebar-bg border border-sidebar-border rounded;
+}

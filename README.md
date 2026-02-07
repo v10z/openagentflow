@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  Build autonomous AI agents with four decorators, ten reasoning engines, and full execution tracing.
+  Build autonomous AI agents with four decorators, thirty reasoning engines, and full execution tracing.
 </p>
 
 <p align="center">
@@ -68,7 +68,7 @@ graph TD
     end
 
     subgraph Intelligence ["Intelligence Layer"]
-        R["10 Reasoning Engines"] ~~~ P["5 LLM Providers"]
+        R["30 Reasoning Engines"] ~~~ P["5 LLM Providers"]
     end
 
     subgraph Knowledge ["Knowledge Layer"]
@@ -99,7 +99,7 @@ No API key required — works out of the box with [Claude Code CLI](https://docs
 
 ## Key Features
 
-### 10 Reasoning Engines
+### 30 Reasoning Engines
 
 Go beyond basic ReAct and Chain-of-Thought. Each engine implements a cognitive architecture that structures *how* the LLM thinks, not just *what* it's asked.
 
@@ -111,6 +111,8 @@ trace = await engine.reason("Design a secure auth system", provider)
 # Red team attacks, Blue team defends, Judge decides
 print(trace.final_output)
 ```
+
+#### Core Cognitive (10)
 
 | Engine | Strategy | Best for |
 |--------|----------|----------|
@@ -124,6 +126,36 @@ print(trace.final_output)
 | `TemporalRecursion` | Future-self pre-mortem | Risk planning |
 | `SimulatedAnnealing` | Temperature-based exploration | Escaping local optima |
 | `SocraticInterrogation` | Progressive questioning | Critical thinking |
+
+#### Neuroscience-Inspired (10)
+
+| Engine | Strategy | Best for |
+|--------|----------|----------|
+| `PredictiveCoding` | Prediction-error minimisation | Iterative refinement |
+| `GlobalWorkspace` | Specialist competition + broadcast | Multi-domain synthesis |
+| `HebbianAssociation` | Spreading activation networks | Concept discovery |
+| `DefaultModeNetwork` | Focus / mind-wander alternation | Creative breakthroughs |
+| `HippocampalReplay` | Forward/backward mental replay | Learning from experience |
+| `AttractorNetwork` | Basin-of-attraction convergence | Robust consensus |
+| `NeuralOscillation` | Multi-frequency processing | Complex integration |
+| `LateralInhibition` | Winner-take-all competition | Decisive selection |
+| `BasalGangliaGating` | Go/No-Go/Hyperdirect gating | Action selection |
+| `NeuromodulatorySweep` | Multi-neurochemical analysis | Comprehensive coverage |
+
+#### Physics-Inspired (10)
+
+| Engine | Strategy | Best for |
+|--------|----------|----------|
+| `SuperpositionCollapse` | Multi-basis measurement | Framing-robust solutions |
+| `WaveInterference` | Constructive/destructive overlay | Argument synthesis |
+| `PhaseTransition` | Order from disorder | Breakthrough insights |
+| `EntropicFunnel` | Information-theoretic narrowing | Hypothesis elimination |
+| `RenormalizationGroup` | Scale-invariant coarse-graining | Essential extraction |
+| `GaugeInvariance` | Perspective-invariant truths | Bias elimination |
+| `PerturbativeExpansion` | Core + ordered corrections | Systematic improvement |
+| `LeastActionPath` | Variational path optimisation | Efficient reasoning |
+| `BarrierPenetration` | Tunnelling through barriers | Impossible problems |
+| `EntangledThreads` | Coupled co-evolving threads | Interdependent problems |
 
 [Full documentation](docs/reasoning.md)
 
@@ -279,7 +311,7 @@ Then use `/openagentflow` in Claude Code to activate it. [Full documentation](do
 | [Getting Started](docs/getting-started.md) | Installation, first agent, configuration |
 | [Agents](docs/agents.md) | 20 specialized agents across 8 categories |
 | [Tools](docs/tools.md) | 99 built-in tools across 9 categories |
-| [Reasoning Engines](docs/reasoning.md) | 10 cognitive architectures for structured thinking |
+| [Reasoning Engines](docs/reasoning.md) | 30 reasoning engines across cognitive, neuroscience, and physics paradigms |
 | [Memory System](docs/memory.md) | 3-tier memory with automatic lifecycle management |
 | [Graph Tracing](docs/graph.md) | Execution DAG recording and querying |
 | [Meta-Agent](docs/meta-agent.md) | JIT tool creation with sandboxed execution |
